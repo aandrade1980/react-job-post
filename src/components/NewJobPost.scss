@@ -1,0 +1,38 @@
+form {
+  margin: 3rem auto;
+  display: flex;
+  justify-content: space-around;
+  div + div { margin-top: 1em }
+}
+
+fieldset {
+  border-radius: 4px;
+  border: solid 1px darkgray
+}
+
+label {
+  display: inline-block;
+  width: 20%;
+  text-align: right;
+  margin-right: 1rem
+}
+
+input, textarea { 
+  font: .8em sans-serif;
+  width: 300px;
+  box-sizing: border-box;
+  &:fous { border-color: #000 }
+}
+
+input[type="date"] { width: 150px }
+
+textarea {
+  vertical-align: top;
+  resize: vertical;
+  min-height: 50px
+}
+
+.button {
+  display: flex;
+  justify-content: flex-end
+}
