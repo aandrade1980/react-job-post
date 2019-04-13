@@ -3,6 +3,8 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const logger = require('morgan');
 const fileUpload = require('express-fileupload');
+const fs = require('fs');
+
 const Data = require('./data');
 
 const API_PORT = 3001;
@@ -62,6 +64,10 @@ router.post('/putJob', (req, res) => {
 router.delete('/deleteJob/:id', (req, res) => {
   Data.findByIdAndRemove(req.params.id, (err, job) => {
     if (err) return res.status(500).send(err);
+    // Remove Image
+    fs.unlink(`${__dirname}/public/${job.imgUrl}`, (err) => {
+      if (err) throw err;
+    });
     const response = {
       message: "Job successfully deleted",
       id: job._id
