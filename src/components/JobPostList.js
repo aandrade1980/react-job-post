@@ -17,14 +17,9 @@ const JobPostList = () => {
     })
       .then(response => response.json())
       .then(response => removeJobById(response.id));
-    ;
   }
 
-  const removeJobById = jobId => {
-    console.log("JOBS => ", jobs);
-    
-    setJobs(jobs.filter(job => job._id !== jobId));
-  }
+  const removeJobById = jobId => setJobs(jobs.filter(job => job._id !== jobId));
 
   return (
     <div className="jobList-container">
