@@ -18,5 +18,5 @@ Header.propTypes = {
 };
 
 Header.defaultProps = {
-  title: 'Job Posts'
+  title: 'Jobs'
 };

@@ -4,3 +4,10 @@ ul {
 }
 
 li { margin-right: 1rem }
+
+.jobList-container {
+  display: flex;
+  flex-wrap: wrap
+}
+
+main { margin-top: 65px }

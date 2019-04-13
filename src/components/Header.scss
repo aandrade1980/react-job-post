@@ -2,5 +2,12 @@
   background-color: #292972;
   color: whitesmoke;
   display: flex;
-  justify-content: center
+  justify-content: center;
+  height: 65px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  align-items: center;
+  z-index: 1
 }

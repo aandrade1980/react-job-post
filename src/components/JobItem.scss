@@ -1,0 +1,17 @@
+.jobCard {
+  max-width: 350px;
+  height: fit-content;
+  margin: 1rem auto;
+  // text-align: center;
+  background-color: #fff;
+  background-clip: border-box;
+  border: 1px solid rgba(0,0,0,.125);
+  border-radius: .25rem;
+  transition: .3s;
+  box-shadow: 0 2px 20px 0 rgba(0,0,0,.1);
+  padding: 10px;
+  &:hover {
+    transform: scale(1.05);
+    box-shadow: 2px 4px 40px 0 rgba(0,0,0,.08);
+  }
+}

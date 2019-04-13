@@ -6,7 +6,7 @@ import './NewJobPost.scss';
 class NewJobPost extends Component {
   state = {
     title: '',
-    description: ''
+    description: '',
   }
 
   submitJobPost = event => {
