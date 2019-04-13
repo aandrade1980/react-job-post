@@ -65,10 +65,8 @@ router.delete('/deleteJob/:id', (req, res) => {
   Data.findByIdAndRemove(req.params.id, (err, job) => {
     if (err) return res.status(500).send(err);
     // Remove Image
-    console.log('job => ', job);
     fs.unlink(`${__dirname}/public/${job.imgUrl}`, (err) => {
       if (err) throw err;
-      console.log('file was deleted');
     });
     const response = {
       message: "Job successfully deleted",

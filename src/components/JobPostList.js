@@ -31,6 +31,7 @@ const JobPostList = () => {
             title={ job.title } 
             description={ job.description } 
             imgUrl={ job.imgUrl }
+            createdAt={ job.createdAt }
             deleteJob={ deleteJob }
           />
         )
