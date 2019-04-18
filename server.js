@@ -10,7 +10,7 @@ const path = require('path');
 
 const Data = require('./data');
 
-const API_PORT = 4000;
+const API_PORT = process.env.PORT || 4000;
 const app = express();
 const router = express.Router();
 
