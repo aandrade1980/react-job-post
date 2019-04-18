@@ -1,9 +1,8 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React, { memo } from 'react';
 
 import './Header.scss';
 
-export default function Header({ title }) {
+export default memo(function Header({ title }) {
   return (
     <header className="header">
       <h1>
@@ -11,12 +10,4 @@ export default function Header({ title }) {
       </h1>
     </header>
   )
-}
-
-Header.propTypes = {
-  title: PropTypes.string
-};
-
-Header.defaultProps = {
-  title: 'Jobs'
-};
+});

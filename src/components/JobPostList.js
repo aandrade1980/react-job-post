@@ -1,6 +1,8 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, lazy, Suspense } from 'react'
 
-import JobItem from './JobItem';
+// import JobItem from './JobItem';
+
+const JobItem = lazy(() => import('./JobItem'));
 
 const JobPostList = () => {
   const [jobs, setJobs] = useState([]);
@@ -23,19 +25,22 @@ const JobPostList = () => {
 
   return (
     <div className="jobList-container">
-      { !jobs.length ? 'No Jobs Yet...' : jobs.map(job => {
-        return (
-          <JobItem 
-            key={ job._id }
-            jobId={ job._id }
-            title={ job.title } 
-            description={ job.description } 
-            imgUrl={ job.imgUrl }
-            createdAt={ job.createdAt }
-            deleteJob={ deleteJob }
-          />
-        )
-      }) }
+      <Suspense fallback={ <div>Loading...</div>}>
+        { jobs.length && jobs.map(job => {
+          return (
+            <JobItem 
+              key={ job._id }
+              jobId={ job._id }
+              title={ job.title } 
+              description={ job.description } 
+              imgUrl={ job.imgUrl }
+              createdAt={ job.createdAt }
+              deleteJob={ deleteJob }
+            />
+            )
+          })
+        }
+      </Suspense>
     </div>
   )
 }
