@@ -22,6 +22,7 @@ class NewJobPost extends Component {
   }
 
   submitJobPost = event => {
+    event.preventDefault();
     if (this.state.id) {
       fetch(`/api/updateJob`, {
         method: 'PUT',
