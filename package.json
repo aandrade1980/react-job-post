@@ -16,11 +16,10 @@
     "react-scripts": "2.1.5"
   },
   "scripts": {
-    "start": "concurrently \"cd backend && node server.js\" \"react-scripts start\"",
-    "build": "react-scripts build",
+    "start": "concurrently \"cd backend && nodemon server.js\" \"react-scripts start\"",
+    "build": "yarn install && && yarn install --only=dev && yarn build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject",
-    "heroku-postbuild": "cd backend && yarn install && cd .. && yarn build"
+    "eject": "react-scripts eject"
   },
   "eslintConfig": {
     "extends": "react-app"
