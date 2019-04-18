@@ -1,3 +1,5 @@
+/* eslint-disable no-console */
+/* eslint-disable no-undef */
 const mongoose = require('mongoose');
 const express = require('express');
 const bodyParser = require('body-parser');
@@ -77,5 +79,15 @@ router.delete('/deleteJob/:id', (req, res) => {
 });
 
 app.use("/api", router);
+
+if (process.env.NODE_ENV === 'production') {
+  // Serve any static files
+  app.use(express.static(path.join(__dirname, 'client/build')));
+
+  // Handle React routing, return all requests to React app
+  app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, 'client/build', 'index.html'));
+  });
+}
 
 app.listen(API_PORT, () => console.log(`LISTENING ON PORT ${API_PORT}`));
