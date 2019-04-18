@@ -17,7 +17,7 @@
   },
   "scripts": {
     "start": "concurrently \"cd backend && nodemon server.js\" \"react-scripts start\"",
-    "build": "yarn install && cd backend && yarn install --only=dev && cd .. && yarn build",
+    "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
