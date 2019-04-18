@@ -1,7 +1,5 @@
 import React, { useState, useEffect, lazy, Suspense } from 'react'
 
-// import JobItem from './JobItem';
-
 const JobItem = lazy(() => import('./JobItem'));
 
 const JobPostList = () => {
@@ -13,7 +11,7 @@ const JobPostList = () => {
       .then(jsonResponse => setJobs(jsonResponse.data));
   }, []);
 
-  const deleteJob = id => {
+  const deleteJob = (event, id) => {
     fetch(`/api/deleteJob/${id}`, {
       method: 'DELETE'
     })
@@ -26,9 +24,9 @@ const JobPostList = () => {
   return (
     <div className="jobList-container">
       <Suspense fallback={ <div>Loading...</div>}>
-        { jobs.length && jobs.map(job => {
+        { jobs.length > 0 && jobs.map(job => {
           return (
-            <JobItem 
+            <JobItem
               key={ job._id }
               jobId={ job._id }
               title={ job.title } 

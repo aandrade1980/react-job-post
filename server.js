@@ -1,5 +1,3 @@
-/* eslint-disable no-console */
-/* eslint-disable no-undef */
 const mongoose = require('mongoose');
 const express = require('express');
 const bodyParser = require('body-parser');
@@ -35,23 +33,52 @@ app.use(express.static('public'));
 
 router.get('/getJobs', (req, res) => {
   Data.find((err, data) => {
-    if (err) return res.json({ success: false, error: err });
+    if(err) return res.json({ success: false, error: err });
     return res.json({ success: true, data });
   })
 });
 
+router.get('/getJob/:id', (req, res) => {
+  const { id } = req.params;
+  Data.findOne( {_id: id}, (err, job) => {
+    if(err) return res.json({ success: false, error: err });
+    return res.json({
+        success: true,
+        job
+      })
+  });
+});
+
+router.put('/updateJob', (req, res) => {
+  const { id } = req.body;
+  Data.findByIdAndUpdate(
+    id,
+    req.body,
+    { new: true },
+    (err, job) => {
+      if(err) return res.json({ success: false, error: err });
+      return res.json({
+        success: true,
+        job
+      }) 
+    }
+  );
+})
+
 router.post('/putJob', (req, res) => {
   let data = new Data();
 
-  let imageFile = req.files.file;
+  const imageFile = req.files && req.files.file;
 
-  imageFile.mv(`${__dirname}/public/img/${imageFile.name}`, err => {
-    if (err) {
-      return res.status(500).send(err);
-    }
-  });
-
-  data.imgUrl = `img/${imageFile.name}`;
+  if(imageFile) {
+    imageFile.mv(`${__dirname}/public/img/${imageFile.name}`, err => {
+      if (err) {
+        return res.status(500).send(err);
+      }
+    });
+  
+    data.imgUrl = `img/${imageFile.name}`;
+  }
   
   const { title, description } = req.body;
   
@@ -68,9 +95,12 @@ router.delete('/deleteJob/:id', (req, res) => {
   Data.findByIdAndRemove(req.params.id, (err, job) => {
     if (err) return res.status(500).send(err);
     // Remove Image
-    fs.unlink(`${__dirname}/public/${job.imgUrl}`, (err) => {
-      if (err) throw err;
-    });
+    if (job.imgUrl) {
+      fs.unlink(`${__dirname}/public/${job.imgUrl}`, (err) => {
+        if (err) throw err;
+      });
+    }
+    
     const response = {
       message: "Job successfully deleted",
       id: job._id

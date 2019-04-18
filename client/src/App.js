@@ -34,6 +34,11 @@ class App extends Component {
                 component={ NewJobPost }
                 />
               <Route 
+                exact 
+                path="/new-post/:id" 
+                component={ NewJobPost }
+              />
+              <Route 
                 path="/"
                 component={ JobPostList }
               />
