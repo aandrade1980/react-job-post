@@ -7,7 +7,7 @@ const fs = require('fs');
 
 const Data = require('./data');
 
-const API_PORT = 3001;
+const API_PORT = 4000;
 const app = express();
 const router = express.Router();
 

@@ -20,7 +20,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "heroku-postbuild": "yarn && yarn run build && cd backend && yarn"
+    "heroku-postbuild": "cd backend && yarn install && cd.. && yarn build"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -34,5 +34,5 @@
   "devDependencies": {
     "node-sass": "^4.11.0"
   },
-  "proxy": "http://localhost:3001"
+  "proxy": "http://localhost:4000"
 }
