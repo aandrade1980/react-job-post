@@ -42,7 +42,7 @@ router.get('/getJobs', (req, res) => {
 
 router.get('/getJob/:id', (req, res) => {
   const { id } = req.params;
-  Data.findOne( {_id: id}, (err, job) => {
+  Data.findOne({ _id: id }, (err, job) => {
     if(err) return res.json({ success: false, error: err });
     return res.json({
         success: true,
@@ -53,8 +53,8 @@ router.get('/getJob/:id', (req, res) => {
 
 router.put('/updateJob', (req, res) => {
   const { id } = req.body;
-  Data.findByIdAndUpdate(
-    id,
+  Data.findOneAndUpdate(
+    { _id: id },
     req.body,
     { new: true },
     (err, job) => {
@@ -99,14 +99,14 @@ router.post('/putJob', (req, res) => {
       return res.json({ success: true });
     });
 
-    fs.unlink(`${__dirname}/tmp/${data.imgUrl}`, (err) => {
+    imageFile && fs.unlink(`${__dirname}/tmp/${data.imgUrl}`, (err) => {
       if (err) throw err;
     });
   })();
 });
 
 router.delete('/deleteJob/:id', (req, res) => {
-  Data.findByIdAndRemove(req.params.id, (err, job) => {
+  Data.findOneAndDelete({ _id: req.params.id }, (err, job) => {
     if (err) return res.status(500).send(err);
     // Remove Image
     if (job.imgUrl) {
