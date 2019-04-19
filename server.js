@@ -5,6 +5,8 @@ const logger = require('morgan');
 const fileUpload = require('express-fileupload');
 const fs = require('fs');
 const path = require('path');
+const imagemin = require('imagemin');
+const imageminPngquant = require('imagemin-pngquant');
 
 const Data = require('./data');
 
@@ -71,7 +73,7 @@ router.post('/putJob', (req, res) => {
   const imageFile = req.files && req.files.file;
 
   if(imageFile) {
-    imageFile.mv(`${__dirname}/public/img/${imageFile.name}`, err => {
+    imageFile.mv(`${__dirname}/tmp/img/${imageFile.name}`, err => {
       if (err) {
         return res.status(500).send(err);
       }
@@ -80,15 +82,27 @@ router.post('/putJob', (req, res) => {
     data.imgUrl = `img/${imageFile.name}`;
   }
   
-  const { title, description } = req.body;
+  (async () => {
+    await imagemin(
+      [`${__dirname}/tmp/${data.imgUrl}`],
+      `${__dirname}/public/img/`,
+      { plugins: [imageminPngquant()] }
+    );
+    
+    const { title, description } = req.body;
   
-  data.title = title;
-  data.description = description;
+    data.title = title;
+    data.description = description;
+  
+    data.save(err => {
+      if (err) return res.json({ success: false, error: err });
+      return res.json({ success: true });
+    });
 
-  data.save(err => {
-    if (err) return res.json({ success: false, error: err });
-    return res.json({ success: true });
-  })
+    fs.unlink(`${__dirname}/tmp/${data.imgUrl}`, (err) => {
+      if (err) throw err;
+    });
+  })();
 });
 
 router.delete('/deleteJob/:id', (req, res) => {
