@@ -8,6 +8,7 @@ class NewJobPost extends Component {
     id: '',
     title: '',
     description: '',
+    isFetching: false
   }
 
   componentDidMount() {
@@ -22,6 +23,7 @@ class NewJobPost extends Component {
   }
 
   submitJobPost = event => {
+    this.setState({ isFetching: true });
     event.preventDefault();
     if (this.state.id) {
       fetch(`/api/updateJob`, {
@@ -68,40 +70,46 @@ class NewJobPost extends Component {
 
   render() {
     return (
-      <form onSubmit={ this.submitJobPost }>
-        <fieldset>
-          <legend>Job Info</legend>
-          <div>
-            <label htmlFor="title">Title:</label>
-            <input 
-              type="text" 
-              name="title" 
-              value={ this.state.title } 
-              onChange={ this.changeHandler }
-            />
-          </div>
-          <div>
-            <label htmlFor="description">Description:</label>
-            <textarea 
-              name="description" 
-              rows="4" 
-              cols="50"
-              value={ this.state.description } 
-              onChange={ this.changeHandler }
-            />
-          </div>
-          <div>
-            <label>PrintScreen: </label>
-            <input 
-              ref={ (ref) => { this.uploadInput = ref }} 
-              type="file" 
-            />
-          </div>
-          <div className="button">
-            <button type="submit">Send this!</button>
-          </div>
-        </fieldset>
-      </form>
+      <>
+        { this.state.isFetching ? 
+          <span>Fetching...</span>
+           : 
+          <form onSubmit={ this.submitJobPost }>
+          <fieldset>
+            <legend>Job Info</legend>
+            <div>
+              <label htmlFor="title">Title:</label>
+              <input 
+                type="text" 
+                name="title" 
+                value={ this.state.title } 
+                onChange={ this.changeHandler }
+              />
+            </div>
+            <div>
+              <label htmlFor="description">Description:</label>
+              <textarea 
+                name="description" 
+                rows="4" 
+                cols="50"
+                value={ this.state.description } 
+                onChange={ this.changeHandler }
+              />
+            </div>
+            <div>
+              <label>PrintScreen: </label>
+              <input 
+                ref={ (ref) => { this.uploadInput = ref }} 
+                type="file" 
+              />
+            </div>
+            <div className="button">
+              <button type="submit">Send this!</button>
+            </div>
+          </fieldset>
+        </form>
+        }
+      </>
     )
   }
 }

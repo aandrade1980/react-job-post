@@ -17,7 +17,7 @@ function JobItem({ jobId, title, description, imgUrl, createdAt, deleteJob, hist
 
   return (
     <div className="jobCard" onClick={ routeChange }>
-      <button type="button" className="btn btn-danger" style={ styles.button } onClick={ () => deleteJob(event, jobId) }>Delete</button>
+      <button type="button" className="btn btn-danger" style={ styles.button } onClick={ () => deleteJob(jobId) }>Delete</button>
       <h5>{ title }</h5>
       <p style={ styles.p }>{ description }</p>
       { imgUrl && <img style={ styles.img } alt="Job" src={ imgUrl } /> }

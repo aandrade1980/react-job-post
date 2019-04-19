@@ -1,11 +1,6 @@
 {
   "name": "react-job-post",
   "version": "0.1.0",
-  "engines": {
-    "node": "8.11.3",
-    "npm": "6.x",
-    "yarn": "1.x"
-  },
   "private": true,
   "dependencies": {
     "bootstrap": "^4.3.1",

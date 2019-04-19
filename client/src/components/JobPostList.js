@@ -11,7 +11,7 @@ const JobPostList = () => {
       .then(jsonResponse => setJobs(jsonResponse.data));
   }, []);
 
-  const deleteJob = (event, id) => {
+  const deleteJob = id => {
     fetch(`/api/deleteJob/${id}`, {
       method: 'DELETE'
     })
@@ -23,7 +23,7 @@ const JobPostList = () => {
 
   return (
     <div className="jobList-container">
-      <Suspense fallback={ <div>Loading...</div>}>
+      <Suspense fallback={ <div>Loading...</div> } >
         { jobs.length > 0 && jobs.map(job => {
           return (
             <JobItem
@@ -35,7 +35,7 @@ const JobPostList = () => {
               createdAt={ job.createdAt }
               deleteJob={ deleteJob }
             />
-            )
+          )
           })
         }
       </Suspense>
