@@ -94,14 +94,14 @@ router.post('/putJob', (req, res) => {
     data.title = title;
     data.description = description;
   
-    data.save(err => {
-      if (err) return res.json({ success: false, error: err });
+    data.save(error => {
+      if (error) return res.json({ success: false, error });
+      imageFile && fs.unlink(`${__dirname}/tmp/${data.imgUrl}`, (err) => {
+        if (err) throw err;
+      });
       return res.json({ success: true });
     });
-
-    imageFile && fs.unlink(`${__dirname}/tmp/${data.imgUrl}`, (err) => {
-      if (err) throw err;
-    });
+    
   })();
 });
 
