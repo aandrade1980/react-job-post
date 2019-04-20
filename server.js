@@ -95,10 +95,11 @@ router.post('/putJob', (req, res) => {
     data.description = description;
   
     data.save(error => {
-      if (error) return res.json({ success: false, error });
+      // Remove img from the tmp directory
       imageFile && fs.unlink(`${__dirname}/tmp/${data.imgUrl}`, (err) => {
         if (err) throw err;
       });
+      if (error) return res.json({ success: false, error });
       return res.json({ success: true });
     });
     
