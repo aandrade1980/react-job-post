@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
+import { BrowserRouter as Router, Switch, Route, NavLink } from 'react-router-dom';
 
-import './App.css';
+import './App.scss';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 
@@ -20,22 +20,17 @@ class App extends Component {
             <nav>
               <ul>
                 <li>
-                  <Link to='/'>Home</Link>
+                  <NavLink exact={true} to="/" activeClassName="selected">Home</NavLink>
                 </li>
                 <li>
-                  <Link to='/new-post'>New Job</Link>
+                  <NavLink to="/new-post" activeClassName="selected">New Job</NavLink>
                 </li>
               </ul>
             </nav>
             <Switch>
               <Route 
                 exact 
-                path="/new-post" 
-                component={ NewJobPost }
-                />
-              <Route 
-                exact 
-                path="/new-post/:id" 
+                path={["/new-post", "/new-post/:id"]}
                 component={ NewJobPost }
               />
               <Route 

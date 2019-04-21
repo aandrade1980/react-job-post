@@ -1,0 +1,38 @@
+nav {
+  border: 1px solid #e7e7e7;
+  background-color: #f3f3f3;
+  font-size: 15px;
+  ul { margin: 0 }
+  li {
+    min-height: 40px;
+    display: flex;
+    align-items: center;
+    margin: 0;
+  }
+  a {
+    color: #666;
+    padding: 14px;
+    border-bottom: solid 1px transparent;
+    &:hover {
+      color: #666;
+      text-decoration: none;
+      background-color: #ddd;
+    }
+  }
+} 
+
+.selected { border-bottom: solid 1px #008CBA }
+
+ul { 
+  list-style-type: none;
+  display: flex;
+}
+
+li { margin-right: 1rem }
+
+.jobList-container {
+  display: flex;
+  flex-wrap: wrap
+}
+
+main { margin-top: 65px }
