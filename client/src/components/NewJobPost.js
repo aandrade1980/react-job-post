@@ -70,46 +70,50 @@ class NewJobPost extends Component {
 
   render() {
     return (
-      <>
+      <section>
         { this.state.isFetching ? 
           <span>Fetching...</span>
            : 
           <form onSubmit={ this.submitJobPost }>
-          <fieldset>
-            <legend>Job Info</legend>
-            <div>
-              <label htmlFor="title">Title:</label>
-              <input 
-                type="text" 
-                name="title" 
-                value={ this.state.title } 
-                onChange={ this.changeHandler }
-              />
-            </div>
-            <div>
-              <label htmlFor="description">Description:</label>
-              <textarea 
-                name="description" 
-                rows="4" 
-                cols="50"
-                value={ this.state.description } 
-                onChange={ this.changeHandler }
-              />
-            </div>
-            <div>
-              <label>PrintScreen: </label>
-              <input 
-                ref={ (ref) => { this.uploadInput = ref }} 
-                type="file" 
-              />
-            </div>
-            <div className="button">
-              <button type="submit">Send this!</button>
-            </div>
-          </fieldset>
+            <h3>Job Info</h3>
+            <fieldset>
+              <div className="form-group">
+                <input 
+                  type="text" 
+                  name="title" 
+                  className="form-control"
+                  placeholder="Title"
+                  value={ this.state.title } 
+                  onChange={ this.changeHandler }
+                  required
+                />
+              </div>
+              <div className="form-group">
+                <textarea 
+                  name="description" 
+                  rows="4" 
+                  cols="50"
+                  className="form-control"
+                  placeholder="Description"
+                  value={ this.state.description } 
+                  onChange={ this.changeHandler }
+                />
+              </div>
+              <div className="form-group">
+                <label>PrintScreen: </label>
+                <input 
+                  ref={ (ref) => { this.uploadInput = ref }} 
+                  type="file"
+                  className="form-control-file"
+                />
+              </div>
+              <div>
+                <button className="btn btn-primary d-block wth-100" type="submit">Send this!</button>
+              </div>
+            </fieldset>
         </form>
         }
-      </>
+      </section>
     )
   }
 }
