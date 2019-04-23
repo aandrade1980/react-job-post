@@ -19,7 +19,7 @@ function JobItem({ jobId, title, description, imgUrl, createdAt, deleteJob, hist
     <div className="jobCard" onClick={ routeChange }>
       <button type="button" className="btn btn-danger" style={ styles.button } onClick={ () => deleteJob(jobId) }>Delete</button>
       <h5>{ title }</h5>
-      <p style={ styles.p }>{ description }</p>
+      <p className="text-truncate">{ description }</p>
       { imgUrl && <img style={ styles.img } alt="Job" src={ imgUrl } /> }
       <span>Upload on: { createdAtDate.toDateString() }</span>
     </div>  
@@ -28,7 +28,6 @@ function JobItem({ jobId, title, description, imgUrl, createdAt, deleteJob, hist
 
 const styles = {
   img: { maxWidth: '100%' },
-  p: { whiteSpace: 'pre-line' },
   button: {
     float: 'right'
   }

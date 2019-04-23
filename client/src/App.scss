@@ -1,3 +1,7 @@
+.d-block { display: block }
+
+.wth-100 { width: 100% }
+
 nav {
   border: 1px solid #e7e7e7;
   background-color: #f3f3f3;
@@ -36,3 +40,9 @@ li { margin-right: 1rem }
 }
 
 main { margin-top: 65px }
+
+.text-truncate {
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden; 
+}
