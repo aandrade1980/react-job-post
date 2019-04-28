@@ -4,10 +4,8 @@
   display: flex;
   justify-content: center;
   height: 65px;
-  position: fixed;
+  position: sticky;
   top: 0;
-  left: 0;
-  width: 100%;
   align-items: center;
   z-index: 1
 }

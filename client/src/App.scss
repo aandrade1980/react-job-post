@@ -16,7 +16,7 @@ nav {
   a {
     color: #666;
     padding: 14px;
-    border-bottom: solid 1px transparent;
+    border-bottom: solid 2px transparent;
     &:hover {
       color: #666;
       text-decoration: none;
@@ -25,7 +25,7 @@ nav {
   }
 } 
 
-.selected { border-bottom: solid 1px #008CBA }
+.selected { border-bottom: solid 2px #008CBA }
 
 ul { 
   list-style-type: none;
@@ -38,8 +38,6 @@ li { margin-right: 1rem }
   display: flex;
   flex-wrap: wrap
 }
-
-main { margin-top: 65px }
 
 .text-truncate {
   text-overflow: ellipsis;
