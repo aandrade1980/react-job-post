@@ -74,6 +74,8 @@ router.post('/putJob', (req, res) => {
   const tmpPath = `${__dirname}/public/tmp`;
 
   if(imageFile) {
+    // If the folder does not exist, create it
+    !fs.existsSync(tmpPath) && fs.mkdirSync(tmpPath);
     imageFile.mv(`${tmpPath}/${imageFile.name}`, err => {
       console.log('ERROR mv => ', err);
       
