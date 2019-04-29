@@ -89,6 +89,7 @@ class NewJobPost extends Component {
         { this.state.postSuccess ?
             <div className="alert alert-success txt-align-center wth-50" role="alert">
               Job Successfully Posted!
+              <i className="far fa-thumbs-up m-left-5"></i>
             </div> 
           : 
           <form onSubmit={ this.submitJobPost }>

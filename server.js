@@ -73,25 +73,28 @@ router.post('/putJob', (req, res) => {
   const imageFile = req.files && req.files.file;
   const tmpPath = `${__dirname}/public/tmp`;
 
-  if(imageFile) {
-    // If the folder does not exist, create it
-    !fs.existsSync(tmpPath) && fs.mkdirSync(tmpPath);
-    imageFile.mv(`${tmpPath}/${imageFile.name}`, err => {
-      console.log('ERROR mv => ', err);
-      
-      if (err) return res.status(500).send(err)
-    });
-  
-    data.imgUrl = `img/${imageFile.name}`;
-  }
-  
   (async () => {
-    await imagemin(
-      [`${tmpPath}/${imageFile.name}`],
-      `${__dirname}/public/img/`,
-      { plugins: [imageminPngquant()] }
-    );
+    if(imageFile) {
+      // If the folder does not exist, create it
+      !fs.existsSync(tmpPath) && fs.mkdirSync(tmpPath);
+      imageFile.mv(`${tmpPath}/${imageFile.name}`, err => {
+        if (err) return res.status(500).send(err)
+      });
+    
+      data.imgUrl = `img/${imageFile.name}`;
 
+      await imagemin(
+        [`${tmpPath}/${imageFile.name}`],
+        `${__dirname}/public/img/`,
+        { plugins: [imageminPngquant()] }
+      );
+
+      // Remove img from the tmp folder
+      fs.unlink(`${tmpPath}/${imageFile.name}`, err => {
+        if (err) throw err;
+      });
+    }
+    
     const { title, description } = req.body;
   
     data.title = title;
@@ -99,10 +102,6 @@ router.post('/putJob', (req, res) => {
   
     data.save(error => {
       if (error) return res.json({ success: false, error });
-      fs.unlink(`${tmpPath}/${imageFile.name}`, err => {
-        console.log('error al borrar => ', err)
-        if (err) throw err;
-      });
       return res.json({ success: true });
     });
   })();
