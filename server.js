@@ -68,47 +68,41 @@ router.put('/updateJob', (req, res) => {
 })
 
 router.post('/putJob', (req, res) => {
-  try {
-    let data = new Data();
+  let data = new Data();
 
-    const imageFile = req.files && req.files.file;
+  const imageFile = req.files && req.files.file;
 
-    if(imageFile) {
-      imageFile.mv(`${__dirname}/tmp/img/${imageFile.name}`, err => {
-        if (err) {
-          return res.status(500).send(err);
-        }
-      });
-    
-      data.imgUrl = `img/${imageFile.name}`;
-    }
-    
-    (async () => {
-      await imagemin(
-        [`${__dirname}/tmp/${data.imgUrl}`],
-        `${__dirname}/public/img/`,
-        { plugins: [imageminPngquant()] }
-      );
-      
-      const { title, description } = req.body;
-    
-      data.title = title;
-      data.description = description;
-    
-      data.save(error => {
-        // Remove img from the tmp directory
-        imageFile && fs.unlink(`${__dirname}/tmp/${data.imgUrl}`, (err) => {
-          if (err) throw err;
-        });
-        if (error) return res.json({ success: false, error });
-        return res.json({ success: true });
-      });
-      
-    })();
-  } catch (error) {
-    console.log('Error on putJob: ', error);
+  if(imageFile) {
+    imageFile.mv(`${__dirname}/tmp/img/${imageFile.name}`, err => {
+      if (err) {
+        return res.status(500).send(err);
+      }
+    });
+  
+    data.imgUrl = `img/${imageFile.name}`;
   }
   
+  (async () => {
+    await imagemin(
+      [`${__dirname}/tmp/${data.imgUrl}`],
+      `${__dirname}/public/img/`,
+      { plugins: [imageminPngquant()] }
+    );
+    
+    const { title, description } = req.body;
+  
+    data.title = title;
+    data.description = description;
+  
+    data.save(error => {
+      if (error) return res.json({ success: false, error });
+      return res.json({ success: true });
+    });
+    // Remove img from the tmp directory
+    imageFile && fs.unlink(`${__dirname}/tmp/${data.imgUrl}`, err => {
+      if (err) console.log('err => ', err);
+    });
+  })();
 });
 
 router.delete('/deleteJob/:id', (req, res) => {
