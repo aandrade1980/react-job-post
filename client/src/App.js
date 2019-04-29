@@ -21,7 +21,14 @@ class App extends Component {
             <nav>
               <ul>
                 <li>
-                  <NavLink exact={true} to="/" activeClassName="selected">Home</NavLink>
+                  <NavLink 
+                    exact={true} 
+                    to="/" 
+                    activeClassName="selected"
+                  >
+                    Home
+                    <i className="fas fa-home m-left-5"></i>
+                  </NavLink>
                 </li>
                 <li>
                   <NavLink to="/new-post" activeClassName="selected">New Job</NavLink>
