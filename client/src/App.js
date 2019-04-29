@@ -31,7 +31,13 @@ class App extends Component {
                   </NavLink>
                 </li>
                 <li>
-                  <NavLink to="/new-post" activeClassName="selected">New Job</NavLink>
+                  <NavLink 
+                    to="/new-post" 
+                    activeClassName="selected"
+                  >
+                    New Job
+                    <i className="fas fa-file-alt m-left-5"></i>
+                  </NavLink>
                 </li>
               </ul>
             </nav>
