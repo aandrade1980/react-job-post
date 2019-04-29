@@ -71,12 +71,13 @@ router.post('/putJob', (req, res) => {
   let data = new Data();
 
   const imageFile = req.files && req.files.file;
+  const tmpPath = `${__dirname}/public/tmp`;
 
   if(imageFile) {
-    imageFile.mv(`${__dirname}/tmp/img/${imageFile.name}`, err => {
-      if (err) {
-        return res.status(500).send(err);
-      }
+    imageFile.mv(`${tmpPath}/${imageFile.name}`, err => {
+      console.log('ERROR mv => ', err);
+      
+      if (err) return res.status(500).send(err)
     });
   
     data.imgUrl = `img/${imageFile.name}`;
@@ -84,11 +85,11 @@ router.post('/putJob', (req, res) => {
   
   (async () => {
     await imagemin(
-      [`${__dirname}/tmp/${data.imgUrl}`],
+      [`${tmpPath}/${imageFile.name}`],
       `${__dirname}/public/img/`,
       { plugins: [imageminPngquant()] }
     );
-    
+
     const { title, description } = req.body;
   
     data.title = title;
@@ -96,6 +97,10 @@ router.post('/putJob', (req, res) => {
   
     data.save(error => {
       if (error) return res.json({ success: false, error });
+      fs.unlink(`${tmpPath}/${imageFile.name}`, err => {
+        console.log('error al borrar => ', err)
+        if (err) throw err;
+      });
       return res.json({ success: true });
     });
   })();
