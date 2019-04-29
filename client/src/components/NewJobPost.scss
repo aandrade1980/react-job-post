@@ -3,15 +3,10 @@ form {
   width: 40%
 }
 
-h3 { text-align: center }
-
 fieldset {
   padding: 15px 15px;
-  margin-top: 15px;
+  margin-top: 1rem;
   background-color: rgba(0,0,0,0.03);
-  -webkit-border-radius: 3px;
-  -moz-border-radius: 3px;
-  border-radius: 3px;
   border: solid 1px lightgrey;
 }
 
@@ -21,10 +16,24 @@ input, textarea {
   box-sizing: border-box
 }
 
-input[type="date"] { width: 150px }
-
 textarea {
   vertical-align: top;
   resize: vertical;
   min-height: 50px
+}
+
+.alert { 
+  margin: 1rem auto;
+  animation: fadeIn 1s ease-in both;
+}
+
+@keyframes fadeIn {
+	from {
+		opacity: 0;
+		transform: translate3d(0, -30%, 0);
+	}
+	to {
+		opacity: 1;
+		transform: translate3d(0, 0, 0);
+	}
 }

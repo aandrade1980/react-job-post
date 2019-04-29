@@ -1,11 +1,20 @@
 .d-block { display: block }
 
 .wth-100 { width: 100% }
+.wth-50 { width: 50% }
+
+.m-left-5 { margin-left: 5px }
+
+.txt-align-center { text-align: center }
+
+.border-radius-3 {
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+}
 
 nav {
-  border: 1px solid #e7e7e7;
-  background-color: #f3f3f3;
-  font-size: 15px;
+  background-color: #e7e7e7;
   ul { margin: 0 }
   li {
     min-height: 40px;
