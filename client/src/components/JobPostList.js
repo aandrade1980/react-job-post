@@ -8,7 +8,8 @@ const JobPostList = () => {
   useEffect(() => {
     fetch('/api/getJobs')
       .then(response => response.json())
-      .then(jsonResponse => setJobs(jsonResponse.data));
+      .then(jsonResponse => setJobs(jsonResponse.data))
+      .catch(error => console.log('Error fetching jobs: ', error));
   }, []);
 
   const deleteJob = id => {
@@ -16,7 +17,8 @@ const JobPostList = () => {
       method: 'DELETE'
     })
       .then(response => response.json())
-      .then(response => removeJobById(response.id));
+      .then(response => removeJobById(response.id))
+      .catch(error => console.log('Error deleting job: ', error));
   }
 
   const removeJobById = jobId => setJobs(jobs.filter(job => job._id !== jobId));
