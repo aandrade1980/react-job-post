@@ -117,7 +117,6 @@ class NewJobPost extends Component {
                 />
               </div>
               <div className="form-group">
-                <label>PrintScreen: </label>
                 <input 
                   ref={ (ref) => { this.uploadInput = ref }} 
                   type="file"
