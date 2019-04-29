@@ -3,12 +3,15 @@ import { withRouter } from 'react-router-dom';
 
 import './NewJobPost.scss';
 
+const timeOut = 2000;
+
 class NewJobPost extends Component {
   state = {
     id: '',
     title: '',
     description: '',
-    isFetching: false
+    isFetching: false,
+    postSuccess: false
   }
 
   componentDidMount() {
@@ -37,7 +40,13 @@ class NewJobPost extends Component {
       .then(res => res.json())
       .then(res => {
         if (res.success) {
-          this.props.history.push('/');
+          this.setState({ 
+            postSuccess: true,
+            isFetching: false 
+          });
+          setTimeout(() => {
+            this.props.history.push('/');  
+          }, timeOut);
         } else {
           console.log('Error: ', res.error);
         };
@@ -55,7 +64,13 @@ class NewJobPost extends Component {
       }).then(res => res.json())
         .then(res => {
           if (res.success) {
-            this.props.history.push('/')
+            this.setState({ 
+              postSuccess: true,
+              isFetching: false
+             });
+            setTimeout(() => {
+              this.props.history.push('/')  
+            }, timeOut);
           } else {
             console.log('Error: ', res.error);
           }
@@ -71,12 +86,14 @@ class NewJobPost extends Component {
   render() {
     return (
       <section>
-        { this.state.isFetching ? 
-          <span>Fetching...</span>
-           : 
+        { this.state.postSuccess ?
+            <div className="alert alert-success txt-align-center wth-50" role="alert">
+              Job Successfully Posted!
+            </div> 
+          : 
           <form onSubmit={ this.submitJobPost }>
-            <h3>Job Info</h3>
-            <fieldset>
+            <h3 className="txt-align-center">Job Info</h3>
+            <fieldset className="border-radius-3">
               <div className="form-group">
                 <input 
                   type="text" 
@@ -107,8 +124,12 @@ class NewJobPost extends Component {
                   className="form-control-file"
                 />
               </div>
+              
               <div>
-                <button className="btn btn-primary d-block wth-100" type="submit">Send this!</button>
+                <button className="btn btn-primary btn-block" type="submit">
+                  { this.state.isFetching ? 'Fetching...' : 'Send this!' }
+                  <i className="far fa-paper-plane m-left-5"></i>
+                </button>
               </div>
             </fieldset>
         </form>
