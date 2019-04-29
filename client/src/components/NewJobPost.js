@@ -126,7 +126,11 @@ class NewJobPost extends Component {
               </div>
               
               <div>
-                <button className="btn btn-primary btn-block" type="submit">
+                <button 
+                  className="btn btn-primary btn-block" 
+                  type="submit" 
+                  disabled={ this.state.isFetching }
+                >
                   { this.state.isFetching ? 'Fetching...' : 'Send this!' }
                   <i className="far fa-paper-plane m-left-5"></i>
                 </button>
