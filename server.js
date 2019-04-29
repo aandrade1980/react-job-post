@@ -99,7 +99,14 @@ router.post('/putJob', (req, res) => {
       return res.json({ success: true });
     });
     // Remove img from the tmp directory
-    imageFile && fs.unlink(`${__dirname}/tmp/${data.imgUrl}`, err => {
+    console.log('data.imgUrl => ', data.imgUrl);
+    
+    const imgPath = path.join(__dirname, 'tmp', data.imgUrl);
+
+    console.log('imgPath => ', imgPath);
+    
+
+    imageFile && fs.unlink(imgPath, err => {
       if (err) console.log('err => ', err);
     });
   })();
