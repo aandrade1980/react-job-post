@@ -95,10 +95,12 @@ router.post('/putJob', (req, res) => {
       });
     }
     
-    const { title, description } = req.body;
+    const { title, description, email, company } = req.body;
   
     data.title = title;
     data.description = description;
+    data.email = email;
+    data.company = company;
   
     data.save(error => {
       if (error) return res.json({ success: false, error });

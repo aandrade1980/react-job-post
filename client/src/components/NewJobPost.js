@@ -10,72 +10,41 @@ class NewJobPost extends Component {
     id: '',
     title: '',
     description: '',
+    company: '',
+    email: '',
     isFetching: false,
     postSuccess: false
-  }
-
-  componentDidMount() {
-    const { id } = this.props.match.params;
-    this.setState({ id });
-    id && fetch(`/api/getJob/${id}`)
-      .then(response => response.json())
-      .then(jsonResponse => this.setState({
-        title: jsonResponse.job.title,
-        description: jsonResponse.job.description,
-      }));
   }
 
   submitJobPost = event => {
     this.setState({ isFetching: true });
     event.preventDefault();
-    if (this.state.id) {
-      fetch(`/api/updateJob`, {
-        method: 'PUT',
-        mode: 'cors',
-        body: JSON.stringify(this.state),
-        headers: {
-          'Content-Type': 'application/json'
-      }
-      })
-      .then(res => res.json())
+    
+    const data = new FormData();
+    data.append('title', this.state.title);
+    data.append('description', this.state.description);
+    data.append('file', this.uploadInput.files[0]);
+    data.append('email', this.state.email);
+    data.append('company', this.state.company);
+      
+    fetch('/api/putJob', {
+      method: 'POST',
+      body: data
+    }).then(res => res.json())
       .then(res => {
         if (res.success) {
           this.setState({ 
             postSuccess: true,
-            isFetching: false 
-          });
+            isFetching: false
+            });
           setTimeout(() => {
-            this.props.history.push('/');  
+            this.props.history.push('/')  
           }, timeOut);
         } else {
           console.log('Error: ', res.error);
-        };
-        
+        }
       });
-    } else {
-      const data = new FormData();
-      data.append('title', this.state.title);
-      data.append('description', this.state.description);
-      data.append('file', this.uploadInput.files[0]);
-        
-      fetch('/api/putJob', {
-        method: 'POST',
-        body: data
-      }).then(res => res.json())
-        .then(res => {
-          if (res.success) {
-            this.setState({ 
-              postSuccess: true,
-              isFetching: false
-             });
-            setTimeout(() => {
-              this.props.history.push('/')  
-            }, timeOut);
-          } else {
-            console.log('Error: ', res.error);
-          }
-        });
-    }
+    
   }
 
   changeHandler = event => {
@@ -98,12 +67,38 @@ class NewJobPost extends Component {
               <div className="form-group">
                 <input 
                   type="text" 
-                  name="title" 
+                  name="title"
+                  autoComplete="off"
                   className="form-control"
                   placeholder="Title"
                   value={ this.state.title } 
                   onChange={ this.changeHandler }
                   required
+                />
+              </div>
+              <div className="input-group mb-3">
+                <div className="input-group-prepend">
+                  <span className="input-group-text" id="basic-addon1">@</span>
+                </div>
+                <input 
+                  type="text"
+                  name="email"
+                  autoComplete="off"
+                  className="form-control" 
+                  placeholder="Email"
+                  value={ this.state.email } 
+                  onChange={ this.changeHandler }
+                />
+              </div>
+              <div className="form-group">
+                <input 
+                  type="text" 
+                  name="company"
+                  autoComplete="off"
+                  className="form-control"
+                  placeholder="Company"
+                  value={ this.state.company } 
+                  onChange={ this.changeHandler }
                 />
               </div>
               <div className="form-group">

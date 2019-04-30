@@ -1,11 +1,22 @@
 .d-block { display: block }
+.d-flex { display: flex }
 
-.wth-100 { width: 100% }
 .wth-50 { width: 50% }
+.wth-55 { width: 55% }
+.wth-100 { width: 100% }
+
+.height-55 { height: 55% }
 
 .m-left-5 { margin-left: 5px }
+.m-right-15 { margin-right: 15px }
+
+.m-top-25 { margin-top: 25px }
 
 .txt-align-center { text-align: center }
+
+.justify-cont-center { justify-content: center }
+
+.alg-items-f-start { align-items: flex-start }
 
 .border-radius-3 {
   -webkit-border-radius: 3px;

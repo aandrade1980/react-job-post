@@ -5,12 +5,11 @@ import { withRouter } from 'react-router-dom';
 
 import './JobItem.scss';
 
-function JobItem({ jobId, title, description, imgUrl, createdAt, deleteJob, history }) {
-  const createdAtDate =  new Date(createdAt);
-  
+function JobItem({ jobId, title, imgUrl, deleteJob, history }) {
+
   const routeChange = e => {
     if (e.target.tagName !== 'BUTTON') {
-      const path = `/new-post/${jobId}`;
+      const path = `/jobPost/${jobId}`;
       history.push(path);
     }
   }
@@ -21,17 +20,16 @@ function JobItem({ jobId, title, description, imgUrl, createdAt, deleteJob, hist
         Delete<i className="far fa-trash-alt m-left-5"></i>
       </button>
       <h5>{ title }</h5>
-      <p className="text-truncate">{ description }</p>
       { imgUrl && <img style={ styles.img } alt="Job" src={ imgUrl } /> }
-      <span>
-        Created: { createdAtDate.toDateString() }
-      </span>
     </div>  
   )
 }
 
 const styles = {
-  img: { maxWidth: '100%' },
+  img: { 
+    maxWidth: '100%',
+    marginTop: '10px'
+  },
   button: {
     float: 'right'
   }
@@ -40,9 +38,7 @@ const styles = {
 JobItem.propTypes = {
   jobId: PropTypes.string,
   title: PropTypes.string,
-  description: PropTypes.string,
   imgUrl: PropTypes.string,
-  createdAt: PropTypes.string,
   deleteJob: PropTypes.func
 };
 
