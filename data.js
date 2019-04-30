@@ -3,6 +3,8 @@ const Schema = mongoose.Schema;
 
 const DataSchema = new Schema({
   title: String,
+  company: String,
+  email: String,
   description: String,
   imgUrl: String
 },

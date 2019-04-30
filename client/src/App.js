@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Switch, Route, NavLink } from 'react-router-dom';
-import PropTypes from "prop-types"
 
 import './App.scss';
 
@@ -10,6 +9,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import Header from './components/Header';
 import NewJobPost from './components/NewJobPost';
 import JobPostList from './components/JobPostList';
+import JobPost from './components/JobPost';
 
 class App extends Component {
   render() {
@@ -44,8 +44,13 @@ class App extends Component {
             <Switch>
               <Route 
                 exact 
-                path={["/new-post", "/new-post/:id"]}
+                path={"/new-post"}
                 component={ NewJobPost }
+              />
+              <Route 
+                exact 
+                path={"/jobPost/:jobId"}
+                component={ JobPost }
               />
               <Route 
                 path="/"
@@ -57,10 +62,6 @@ class App extends Component {
       </>
     );
   }
-}
-
-Route.propTypes = {
-  path: PropTypes.oneOfType([PropTypes.array, PropTypes.string])
 }
 
 export default App;

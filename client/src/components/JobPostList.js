@@ -32,9 +32,7 @@ const JobPostList = () => {
               key={ job._id }
               jobId={ job._id }
               title={ job.title } 
-              description={ job.description } 
               imgUrl={ job.imgUrl }
-              createdAt={ job.createdAt }
               deleteJob={ deleteJob }
             />
           )
