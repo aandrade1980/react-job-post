@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Switch, Route, NavLink } from 'react-router-dom';
+import PropTypes from "prop-types";
 
 import './App.scss';
 
@@ -44,7 +45,7 @@ class App extends Component {
             <Switch>
               <Route 
                 exact 
-                path={"/new-post"}
+                path={["/new-post", "/updateJob/:id"]}
                 component={ NewJobPost }
               />
               <Route 
@@ -62,6 +63,10 @@ class App extends Component {
       </>
     );
   }
+}
+
+Route.propTypes = {
+  path: PropTypes.oneOfType([PropTypes.array, PropTypes.string])
 }
 
 export default App;
