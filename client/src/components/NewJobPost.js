@@ -1,42 +1,41 @@
-import React, { Component } from 'react';
-import { withRouter } from 'react-router-dom';
-
+import React, { useEffect, useState } from 'react';
 import './NewJobPost.scss';
 
 const timeOut = 2000;
 
-class NewJobPost extends Component {
-  state = {
-    id: '',
+export default function NewJobPost(props) {
+  const [job, setJob] = useState({
     title: '',
     description: '',
     company: '',
     email: '',
     isFetching: false,
     postSuccess: false
-  }
+  });
 
-  componentDidMount() {
-    const { id } = this.props.match.params;
-    this.setState({ id });
+  let uploadInput;
+
+  useEffect(() => {
+    const { id } = props.match.params;
     id && fetch(`/api/getJob/${id}`)
       .then(response => response.json())
-      .then(jsonResponse => this.setState({
-        title: jsonResponse.job.title,
-        description: jsonResponse.job.description,
-        company: jsonResponse.job.company,
-        email: jsonResponse.job.email,
-      }));
-  }
+      .then(jsonRes => setJob({
+        id: jsonRes.job.id,
+        title: jsonRes.job.title,
+        description: jsonRes.job.description || '',
+        company: jsonRes.job.company || '',
+        email: jsonRes.job.email || ''
+      }))
+  }, []);
 
-  submitJobPost = event => {
-    this.setState({ isFetching: true });
+  const submitJobPost = event => {
+    setJob({ ...job, isFetching: true });
     event.preventDefault();
-    if (this.state.id) {
+    if (job.id) {
       fetch(`/api/updateJob`, {
         method: 'PUT',
         mode: 'cors',
-        body: JSON.stringify(this.state),
+        body: JSON.stringify(job),
         headers: {
           'Content-Type': 'application/json'
       }
@@ -44,12 +43,13 @@ class NewJobPost extends Component {
       .then(res => res.json())
       .then(res => {
         if (res.success) {
-          this.setState({ 
+          setJob({ 
+            ...job, 
             postSuccess: true,
             isFetching: false 
           });
           setTimeout(() => {
-            this.props.history.push('/');  
+            props.history.push('/');  
           }, timeOut);
         } else {
           console.log('Error: ', res.error);
@@ -58,11 +58,11 @@ class NewJobPost extends Component {
       });
     } else {
       const data = new FormData();
-      data.append('title', this.state.title);
-      data.append('description', this.state.description);
-      data.append('file', this.uploadInput.files[0]);
-      data.append('email', this.state.email);
-      data.append('company', this.state.company);
+      data.append('title', job.title);
+      data.append('description', job.description);
+      data.append('file', uploadInput.files[0]);
+      data.append('email', job.email);
+      data.append('company', job.company);
         
       fetch('/api/putJob', {
         method: 'POST',
@@ -70,12 +70,13 @@ class NewJobPost extends Component {
       }).then(res => res.json())
         .then(res => {
           if (res.success) {
-            this.setState({ 
+            setJob({
+              ...job,
               postSuccess: true,
               isFetching: false
               });
             setTimeout(() => {
-              this.props.history.push('/')  
+              props.history.push('/')  
             }, timeOut);
           } else {
             console.log('Error: ', res.error);
@@ -84,21 +85,21 @@ class NewJobPost extends Component {
     }
   }
 
-  changeHandler = event => {
+  const changeHandler = event => {
     const { name, value } = event.target;
-    this.setState({ [name]: value });
+    setJob({ ...job, [name]: value });
   }
 
-  render() {
-    return (
+  return (
+    <div>
       <section>
-        { this.state.postSuccess ?
+        { job.postSuccess ?
             <div className="alert alert-success txt-align-center wth-50" role="alert">
               Job Successfully Posted!
               <i className="far fa-thumbs-up m-left-5"></i>
             </div> 
           : 
-          <form onSubmit={ this.submitJobPost }>
+          <form onSubmit={ submitJobPost }>
             <h3 className="txt-align-center">Job Info</h3>
             <fieldset className="border-radius-3">
               <div className="form-group">
@@ -108,8 +109,8 @@ class NewJobPost extends Component {
                   autoComplete="off"
                   className="form-control"
                   placeholder="Title"
-                  value={ this.state.title } 
-                  onChange={ this.changeHandler }
+                  value={ job.title } 
+                  onChange={ changeHandler }
                   required
                 />
               </div>
@@ -123,8 +124,8 @@ class NewJobPost extends Component {
                   autoComplete="off"
                   className="form-control" 
                   placeholder="Email"
-                  value={ this.state.email || '' } 
-                  onChange={ this.changeHandler }
+                  value={ job.email } 
+                  onChange={ changeHandler }
                 />
               </div>
               <div className="form-group">
@@ -134,8 +135,8 @@ class NewJobPost extends Component {
                   autoComplete="off"
                   className="form-control"
                   placeholder="Company"
-                  value={ this.state.company || '' } 
-                  onChange={ this.changeHandler }
+                  value={ job.company } 
+                  onChange={ changeHandler }
                 />
               </div>
               <div className="form-group">
@@ -145,13 +146,13 @@ class NewJobPost extends Component {
                   cols="50"
                   className="form-control"
                   placeholder="Description"
-                  value={ this.state.description} 
-                  onChange={ this.changeHandler }
+                  value={ job.description} 
+                  onChange={ changeHandler }
                 />
               </div>
               <div className="form-group">
                 <input 
-                  ref={ (ref) => { this.uploadInput = ref }} 
+                  ref={ (ref) => { uploadInput = ref }} 
                   type="file"
                   className="form-control-file"
                 />
@@ -161,9 +162,9 @@ class NewJobPost extends Component {
                 <button 
                   className="btn btn-primary btn-block" 
                   type="submit" 
-                  disabled={ this.state.isFetching }
+                  disabled={ job.isFetching }
                 >
-                  { this.state.isFetching ? 'Fetching...' : 'Send this!' }
+                  { job.isFetching ? 'Fetching...' : 'Send this!' }
                   <i className="far fa-paper-plane m-left-5"></i>
                 </button>
               </div>
@@ -171,8 +172,6 @@ class NewJobPost extends Component {
         </form>
         }
       </section>
-    )
-  }
+    </div>
+  )
 }
-
-export default withRouter(NewJobPost);
