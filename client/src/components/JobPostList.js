@@ -1,4 +1,4 @@
-import React, { useState, useEffect, lazy, Suspense } from 'react'
+import React, { lazy, Suspense, useEffect, useState } from 'react';
 
 const JobItem = lazy(() => import('./JobItem'));
 

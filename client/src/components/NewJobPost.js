@@ -150,14 +150,15 @@ export default function NewJobPost(props) {
                   onChange={ changeHandler }
                 />
               </div>
-              <div className="form-group">
-                <input 
-                  ref={ (ref) => { uploadInput = ref }} 
-                  type="file"
-                  className="form-control-file"
-                />
-              </div>
-              
+              { !props.match.params.id && 
+                <div className="form-group">
+                  <input 
+                    ref={ (ref) => { uploadInput = ref }} 
+                    type="file"
+                    className="form-control-file"
+                  />
+                </div>
+              }
               <div>
                 <button 
                   className="btn btn-primary btn-block" 
