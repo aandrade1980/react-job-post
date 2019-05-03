@@ -6,7 +6,8 @@ const DataSchema = new Schema({
   company: String,
   email: String,
   description: String,
-  imgUrl: String
+  imgUrl: String,
+  category: String
 },
   { timestamps: true }
 );

@@ -1,14 +1,19 @@
 import React, { useEffect, useState } from 'react';
+
 import './NewJobPost.scss';
+
+import jobCategories from '../jobCategories';
 
 const timeOut = 2000;
 
 export default function NewJobPost(props) {
+
   const [job, setJob] = useState({
     title: '',
     description: '',
     company: '',
     email: '',
+    category: '',
     isFetching: false,
     postSuccess: false
   });
@@ -20,11 +25,12 @@ export default function NewJobPost(props) {
     id && fetch(`/api/getJob/${id}`)
       .then(response => response.json())
       .then(jsonRes => setJob({
-        id: jsonRes.job.id,
+        id: jsonRes.job._id,
         title: jsonRes.job.title,
         description: jsonRes.job.description || '',
         company: jsonRes.job.company || '',
-        email: jsonRes.job.email || ''
+        email: jsonRes.job.email || '',
+        category: jsonRes.job.category
       }))
   }, []);
 
@@ -60,9 +66,10 @@ export default function NewJobPost(props) {
       const data = new FormData();
       data.append('title', job.title);
       data.append('description', job.description);
-      data.append('file', uploadInput.files[0]);
+      data.append('file', uploadInput && uploadInput.files[0]);
       data.append('email', job.email);
       data.append('company', job.company);
+      data.append('category', job.category);
         
       fetch('/api/putJob', {
         method: 'POST',
@@ -113,6 +120,13 @@ export default function NewJobPost(props) {
                   onChange={ changeHandler }
                   required
                 />
+              </div>
+              <div className="form-group">
+                <select name="category" className="form-control" value={ job.category } onChange={ changeHandler }>
+                  { jobCategories.map((category, index) => {
+                    return <option key={index} value={category}>{category}</option>
+                  }) }
+                </select>
               </div>
               <div className="input-group mb-3">
                 <div className="input-group-prepend">
