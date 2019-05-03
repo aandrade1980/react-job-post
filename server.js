@@ -95,12 +95,13 @@ router.post('/putJob', (req, res) => {
       });
     }
     
-    const { title, description, email, company } = req.body;
+    const { title, description, email, company, category } = req.body;
   
     data.title = title;
     data.description = description;
     data.email = email;
     data.company = company;
+    data.category = category;
   
     data.save(error => {
       if (error) return res.json({ success: false, error });
@@ -115,7 +116,7 @@ router.delete('/deleteJob/:id', (req, res) => {
     // Remove Image
     if (job.imgUrl) {
       fs.unlink(`${__dirname}/public/${job.imgUrl}`, (err) => {
-        if (err) throw err;
+        if (err) console.log('Error on deleteing job: ', err);
       });
     }
     
