@@ -12,12 +12,14 @@ const Header = ({ user, title }) => {
             <h1 className="flex-grow-1 text-center">
               { title }
             </h1>
-            <button className="btn btn-outline-light mr-2" onClick={ value.logOut }>
-              <span className="text-lowercase">
-                <i className="far fa-user mr-2"></i>
-                { user && user.displayName }
-              </span>
-            </button>
+            { user && user.displayName &&
+              <button className="btn btn-outline-light mr-2" onClick={ value.logOut }>
+                <span className="text-lowercase">
+                  <i className="far fa-user mr-2"></i>
+                  { user && user.displayName }
+                </span>
+              </button>
+            }
           </header>
         )
       }}
