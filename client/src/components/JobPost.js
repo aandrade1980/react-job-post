@@ -21,7 +21,7 @@ const JobPost = props => {
           category: jsonResponse.job.category
         })
       );
-  }, []);
+  }, [props.match.params]);
 
   const openEditForm = () => {
     const path = `/updateJob/${job.jobId}`;

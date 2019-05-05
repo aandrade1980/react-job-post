@@ -32,7 +32,7 @@ export default function NewJobPost(props) {
         email: jsonRes.job.email || '',
         category: jsonRes.job.category
       }))
-  }, []);
+  }, [props.match.params]);
 
   const submitJobPost = event => {
     setJob({ ...job, isFetching: true });
