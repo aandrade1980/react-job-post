@@ -7,6 +7,7 @@ const UserContext = React.createContext();
 function UserProvider(props) {
   const initialUser = { user: undefined };
   const [user, setUser] = useState(initialUser);
+  const [isFetching, setIsFetching] = useState(false);
 
   useEffect(() => {
     fBase.auth().onAuthStateChanged(auth => {
@@ -23,6 +24,7 @@ function UserProvider(props) {
   }
 
   const createUser = async (evt, email, password, name, history) => {
+    setIsFetching(true);
     evt.preventDefault();
     await fBase
       .auth()
@@ -47,14 +49,16 @@ function UserProvider(props) {
         console.log("Error in Sing up user => ", error);
         // TODO: add a red alert error banner
         alert(error.message);
-      });
+      })
+      .finally(() => setIsFetching(false));
   }
 
   return (
     <UserContext.Provider value={{
       user,
       logOut,
-      createUser
+      createUser,
+      isFetching
     }}>
       { props.children }
     </UserContext.Provider>

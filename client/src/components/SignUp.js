@@ -13,42 +13,51 @@ function SignUp({ history }) {
   const handleInputChange = evt => setFormData({
     ...formData,
     [evt.target.name]: evt.target.value
-  })
+  });
 
   return (
     <UserConsumer>
       { value => {
         return (
-          <form className="form signup" onSubmit={ (evt) => value.createUser(evt, formData.email, formData.password, formData.name, history) }>
-            <h2>Sign Up</h2>
-            <input
-              className="form-input"
-              type="text"
-              placeholder="Name"
-              name="name"
-              value={formData.name}
-              onChange={event => handleInputChange(event)}
-              required
-            />
-            <input
-              className="form-input"
-              type="email"
-              placeholder="Email Address"
-              name="email"
-              value={formData.email}
-              onChange={event => handleInputChange(event)}
-              required
-            />
-            <input
-              className="form-input"
-              type="password"
-              placeholder="Choose a secure password"
-              name="password"
-              value={formData.password}
-              onChange={event => handleInputChange(event)}
-              required
-            />
-            <button className="form-submit" type="submit">Submit</button>
+          <form className="form" onSubmit={ evt => value.createUser(evt, formData.email, formData.password, formData.name, history) }>
+            <h3 className="text-center mb-3">Sign Up</h3>
+            <div className="form-group">
+              <input
+                className="form-control"
+                type="text"
+                placeholder="Name"
+                name="name"
+                value={formData.name}
+                onChange={event => handleInputChange(event)}
+                required
+              />
+            </div>
+            <div className="form-group">
+              <input
+                className="form-control"
+                type="email"
+                placeholder="Email"
+                name="email"
+                value={formData.email}
+                onChange={event => handleInputChange(event)}
+                required
+              />
+            </div>
+            <div className="form-group">
+              <input
+                className="form-control"
+                type="password"
+                placeholder="Choose a secure password"
+                name="password"
+                value={formData.password}
+                onChange={event => handleInputChange(event)}
+                required
+              />
+            </div>
+            <button className="btn btn-success btn-block" type="submit" disabled={ value.isFetching }>  
+              { value.isFetching ? 'Fetching' : 'Submit'}
+              <i className="fas fa-user-plus ml-2"></i>
+            </button>
           </form>
         )
       }}
