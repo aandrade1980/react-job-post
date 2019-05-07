@@ -106,7 +106,7 @@ export default function NewJobPost(props) {
               <i className="far fa-thumbs-up m-left-5"></i>
             </div> 
           : 
-          <form onSubmit={ submitJobPost }>
+          <form className="w-50" onSubmit={ submitJobPost }>
             <h3 className="txt-align-center">Job Info</h3>
             <fieldset className="border-radius-3">
               <div className="form-group">
