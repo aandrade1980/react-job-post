@@ -101,13 +101,13 @@ export default function NewJobPost(props) {
     <div>
       <section>
         { job.postSuccess ?
-            <div className="alert alert-success txt-align-center wth-50" role="alert">
+            <div className="alert alert-success text-center w-50" role="alert">
               Job Successfully Posted!
               <i className="far fa-thumbs-up m-left-5"></i>
             </div> 
           : 
           <form className="w-50" onSubmit={ submitJobPost }>
-            <h3 className="txt-align-center">Job Info</h3>
+            <h3 className="text-center">Job Info</h3>
             <fieldset className="border-radius-3">
               <div className="form-group">
                 <input 

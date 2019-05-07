@@ -1,9 +1,10 @@
 import * as React from 'react';
 import { UserConsumer } from '../context';
+import { withRouter } from 'react-router-dom';
 
 import './Header.scss';
 
-const Header = ({ user, title }) => {
+const Header = ({ user, title, history }) => {
   return (
     <UserConsumer>
       { value => {
@@ -13,7 +14,7 @@ const Header = ({ user, title }) => {
               { title }
             </h1>
             { user && user.displayName &&
-              <button className="btn btn-outline-light mr-2" onClick={ value.logOut }>
+              <button className="btn btn-outline-light mr-2" onClick={ evt => value.logOut(evt, history) }>
                 <span className="text-lowercase">
                   <i className="far fa-user mr-2"></i>
                   { user && user.displayName }
@@ -27,4 +28,4 @@ const Header = ({ user, title }) => {
   )
 };
 
-export default React.memo(Header);
+export default React.memo(withRouter(Header));
