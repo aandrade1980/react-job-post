@@ -15,12 +15,15 @@ function UserProvider(props) {
     })
   }, []);
 
-  const logOut =  evt => {
+  const logOut = (evt, history) => {
     evt.preventDefault();
     fBase
       .auth()
       .signOut()
-      .then(() => setUser({ user: undefined }));
+      .then(() => {
+        setUser({ user: undefined });
+        history.push("/");
+      })
   }
 
   const createUser = async (evt, email, password, name, history) => {

@@ -29,7 +29,7 @@ const JobPost = props => {
   }
 
   return (
-    <div className="jobContainer d-flex m-top-25 justify-cont-center alg-items-center">
+    <div className="jobContainer d-flex m-top-25 justify-content-center alg-items-center">
       { job.imgUrl && <img className="wth-55 height-55 m-right-15 max-wth-650" alt="Job" src={ `/${job.imgUrl}` } /> }
       <div className="jobInfo m-right-15 max-wth-33">
         <h4>{ job.title }</h4>
