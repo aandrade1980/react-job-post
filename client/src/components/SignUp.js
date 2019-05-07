@@ -3,6 +3,8 @@ import { withRouter } from 'react-router-dom';
 
 import { UserConsumer } from '../context';
 
+import Alert from './Alert';
+
 function SignUp({ history }) {
   const [formData, setFormData] = useState({
     email: '',
@@ -19,7 +21,11 @@ function SignUp({ history }) {
     <UserConsumer>
       { value => {
         return (
-          <form className="form" onSubmit={ evt => value.createUser(evt, formData.email, formData.password, formData.name, history) }>
+          <>
+            { value.error && 
+              <Alert error={ value.error } setError={ value.setError }/>
+            }
+            <form className="form w-50" onSubmit={ evt => value.createUser(evt, formData.email, formData.password, formData.name, history) }>
             <h3 className="text-center mb-3">Sign Up</h3>
             <div className="form-group">
               <input
@@ -59,6 +65,7 @@ function SignUp({ history }) {
               <i className="fas fa-user-plus ml-2"></i>
             </button>
           </form>
+          </>
         )
       }}
     </UserConsumer>

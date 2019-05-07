@@ -5,9 +5,9 @@ import fBase from './utilities/firebase';
 const UserContext = React.createContext();
 
 function UserProvider(props) {
-  const initialUser = { user: undefined };
-  const [user, setUser] = useState(initialUser);
+  const [user, setUser] = useState({ user: undefined });
   const [isFetching, setIsFetching] = useState(false);
+  const [error, setError] = useState(undefined);
 
   useEffect(() => {
     fBase.auth().onAuthStateChanged(auth => {
@@ -45,11 +45,18 @@ function UserProvider(props) {
           history.push("/")
         });
       })
-      .catch(error => {
-        console.log("Error in Sing up user => ", error);
-        // TODO: add a red alert error banner
-        alert(error.message);
-      })
+      .catch(error => setError(error.message))
+      .finally(() => setIsFetching(false));
+  }
+
+  const logIn = async (evt, email, password, history) => {
+    setIsFetching(true);
+    evt.preventDefault();
+    await fBase
+      .auth()
+      .signInWithEmailAndPassword(email, password)
+      .then(() => history.push("/"))
+      .catch(error => setError(error.message))
       .finally(() => setIsFetching(false));
   }
 
@@ -58,7 +65,10 @@ function UserProvider(props) {
       user,
       logOut,
       createUser,
-      isFetching
+      isFetching,
+      error,
+      setError,
+      logIn
     }}>
       { props.children }
     </UserContext.Provider>
