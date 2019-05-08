@@ -107,9 +107,11 @@ li { margin-right: 1rem }
       button { width: 100% }
     }
   }
+  .form { min-width: 95% !important }
 }
 
 .form {
+  width: 50%;
   border: 1px solid #aaa;
   border-radius: 4px;
   padding: 1em
