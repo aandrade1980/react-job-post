@@ -27,7 +27,7 @@ function Login({ history }) {
             { value.error && 
               <Alert error={ value.error } setError={ value.setError } />
             }
-            <form style={{ minWidth: '450px' }} className="form w-25" onSubmit={ evt => value.logIn(evt, formData.email, formData.password, history) }>
+            <form style={{ minWidth: '450px', margin: '4rem auto' }} className="form w-25" onSubmit={ evt => value.logIn(evt, formData.email, formData.password, history) }>
             <h3 className="mb-3 text-center">Login</h3>
             <div className="form-group">
               <input

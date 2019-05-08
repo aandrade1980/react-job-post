@@ -28,7 +28,7 @@ function SignUp({ history }) {
             { value.error && 
               <Alert error={ value.error } setError={ value.setError }/>
             }
-            <form style={{ minWidth: '450px' }} className="form w-25" onSubmit={ evt => value.createUser(evt, formData.email, formData.password, formData.name, history) }>
+            <form style={{ minWidth: '450px', margin: '4rem auto' }} className="form w-25" onSubmit={ evt => value.createUser(evt, formData.email, formData.password, formData.name, history) }>
             <h3 className="text-center mb-3">Sign Up</h3>
             <div className="form-group">
               <input
