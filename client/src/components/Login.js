@@ -3,6 +3,8 @@ import { withRouter } from 'react-router-dom';
 
 import Alert from './Alert';
 
+import BackTo from './BackTo';
+
 import { UserConsumer } from '../context';
 
 function Login({ history }) {
@@ -21,6 +23,7 @@ function Login({ history }) {
       { value => {
         return (
           <>
+            <BackTo toLink="singup" toText="Sing Up" />
             { value.error && 
               <Alert error={ value.error } setError={ value.setError } />
             }
@@ -31,6 +34,7 @@ function Login({ history }) {
                 className="form-control"
                 type="email"
                 placeholder="Email Address"
+                autoComplete="off"
                 name="email"
                 value={formData.email}
                 onChange={event => handleInputChange(event)}

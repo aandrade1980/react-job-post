@@ -41,7 +41,10 @@ textarea {
 */
 
 @media (min-width: 481px) and (max-width: 767px) {
-  form { width: 95% }  
+  form { 
+    width: 95%;
+    margin: 2rem auto
+  }  
 }
 
 /* 
@@ -50,5 +53,8 @@ textarea {
 */
 
 @media (min-width: 320px) and (max-width: 480px) {
-  form { width: 95% }  
+  form { 
+    width: 95%;
+    margin: 2rem auto
+  }  
 }

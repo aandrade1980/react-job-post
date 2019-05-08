@@ -30,7 +30,7 @@ const App = () => {
               <ul>
                 <li>
                   <NavLink 
-                    exact={true} 
+                    exact={ true }
                     to="/" 
                     activeClassName="selected"
                   >
