@@ -1,4 +1,8 @@
-form { margin: 4rem auto }
+.job-info-form {
+  margin: 4rem auto;
+  width: 50%;
+  min-width: 500px;
+}
 
 fieldset {
   padding: 15px 15px;
@@ -41,10 +45,11 @@ textarea {
 */
 
 @media (min-width: 481px) and (max-width: 767px) {
-  form { 
+  .job-info-form {
+    margin: 2rem auto;
     width: 95%;
-    margin: 2rem auto
-  }  
+    min-width: auto;
+  }
 }
 
 /* 
@@ -53,8 +58,9 @@ textarea {
 */
 
 @media (min-width: 320px) and (max-width: 480px) {
-  form { 
+  .job-info-form {
+    margin: 2rem auto;
     width: 95%;
-    margin: 2rem auto
-  }  
+    min-width: auto;
+  } 
 }
