@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect } from 'react';
 
-import { auth, provider } from './utilities/firebase';
+import { auth, googleProvider, githubProvider } from './utilities/firebase';
+import { GOOGLE_PROVIDER } from './utilities/constants';
 
 const UserContext = React.createContext();
 
@@ -57,10 +58,9 @@ function UserProvider(props) {
       .finally(() => setIsFetching(false));
   }
 
-  const googleSignIn = async history => {
-    provider.addScope('https://www.googleapis.com/auth/contacts.readonly');
+  const providerSignIn = async (provider, history) => {
     auth.useDeviceLanguage();
-    await auth.signInWithPopup(provider)
+    await auth.signInWithPopup(provider === GOOGLE_PROVIDER ? googleProvider : githubProvider)
       .then(() => history.push("/"))
       .catch(error => setError(error.message));
   }
@@ -74,7 +74,7 @@ function UserProvider(props) {
       error,
       setError,
       logIn,
-      googleSignIn
+      providerSignIn
     }}>
       { props.children }
     </UserContext.Provider>
