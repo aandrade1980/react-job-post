@@ -15,8 +15,9 @@ const Header = ({ user, title, history }) => {
             </h1>
             { user && user.displayName &&
               <button className="btn btn-outline-light mr-2" onClick={ evt => value.logOut(evt, history) }>
-                <span className="text-lowercase">
-                  <i className="far fa-user mr-2"></i>
+                <img className="mr-2" style={{ height: '40px', borderRadius: '50%' }} src={ user.photoURL } alt="User" />
+                <span>
+                  { user && !user.photoURL && <i className="far fa-user mr-2"></i> }
                   { user && user.displayName }
                 </span>
               </button>

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 
-import fBase from './utilities/firebase';
+import { auth, provider } from './utilities/firebase';
 
 const UserContext = React.createContext();
 
@@ -10,16 +10,14 @@ function UserProvider(props) {
   const [error, setError] = useState(undefined);
 
   useEffect(() => {
-    fBase.auth().onAuthStateChanged(auth => {
+    auth.onAuthStateChanged(auth => {
       auth && setUser({ user: auth.providerData[0] });
     })
   }, []);
 
   const logOut = (evt, history) => {
     evt.preventDefault();
-    fBase
-      .auth()
-      .signOut()
+    auth.signOut()
       .then(() => {
         setUser({ user: undefined });
         history.push("/");
@@ -29,11 +27,9 @@ function UserProvider(props) {
   const createUser = async (evt, email, password, name, history) => {
     setIsFetching(true);
     evt.preventDefault();
-    await fBase
-      .auth()
-      .createUserWithEmailAndPassword(email, password)
+    await auth.createUserWithEmailAndPassword(email, password)
       .then(() => {
-        const currentUser = fBase.auth().currentUser;
+        const currentUser = auth.currentUser;
 
         currentUser && currentUser.updateProfile({
           displayName: name
@@ -55,12 +51,18 @@ function UserProvider(props) {
   const logIn = async (evt, email, password, history) => {
     setIsFetching(true);
     evt.preventDefault();
-    await fBase
-      .auth()
-      .signInWithEmailAndPassword(email, password)
+    await auth.signInWithEmailAndPassword(email, password)
       .then(() => history.push("/"))
       .catch(error => setError(error.message))
       .finally(() => setIsFetching(false));
+  }
+
+  const googleSignIn = async history => {
+    provider.addScope('https://www.googleapis.com/auth/contacts.readonly');
+    auth.useDeviceLanguage();
+    await auth.signInWithPopup(provider)
+      .then(() => history.push("/"))
+      .catch(error => setError(error.message));
   }
 
   return (
@@ -71,7 +73,8 @@ function UserProvider(props) {
       isFetching,
       error,
       setError,
-      logIn
+      logIn,
+      googleSignIn
     }}>
       { props.children }
     </UserContext.Provider>

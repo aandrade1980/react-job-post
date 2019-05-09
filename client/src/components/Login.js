@@ -1,11 +1,9 @@
 import React, { useState } from 'react';
 import { withRouter } from 'react-router-dom';
 
-import Alert from './Alert';
-
-import BackTo from './BackTo';
-
 import { UserConsumer } from '../context';
+import Alert from './Alert';
+import BackTo from './BackTo';
 
 function Login({ history }) {
   const [formData, setFormData] = useState({
@@ -17,7 +15,7 @@ function Login({ history }) {
     ...formData,
     [evt.target.name]: evt.target.value
   });
-
+  
   return (
     <UserConsumer>
       { value => {
@@ -52,10 +50,17 @@ function Login({ history }) {
                 required
               />
             </div>
-            <button className="btn btn-success btn-block" type="submit" disabled={ value.isFetching }>
-              { value.isFetching ? 'Fetching...' : 'Submit' }
+            <button className="btn btn-success mr-2" type="submit" disabled={ value.isFetching }>
+              { value.isFetching ? 'Fetching...' : 'Login' }
               <i className="fas fa-sign-in-alt ml-2"></i>
             </button>
+            <button 
+                onClick={ () => value.googleSignIn(history) }
+                className="btn btn-primary"
+              >
+                <i className="fab fa-google mr-1"></i>
+                Login with Google
+              </button>
           </form>
          </>
         );
