@@ -5,11 +5,13 @@ const JobPost = props => {
   const [job, setJob] = useState({});
 
   useEffect(() => {
+    let isSubscribed = true;
     const { jobId } = props.match.params;
     
     jobId && fetch(`/api/getJob/${jobId}`)
       .then(response => response.json())
-      .then(jsonResponse => 
+      .then(jsonResponse => {
+        isSubscribed && 
         setJob({
           jobId,
           title: jsonResponse.job.title,
@@ -19,8 +21,9 @@ const JobPost = props => {
           email: jsonResponse.job.email,
           company: jsonResponse.job.company,
           category: jsonResponse.job.category
-        })
-      );
+        })}
+      )
+    return () => isSubscribed = false;
   }, [props.match.params]);
 
   const openEditForm = () => {
