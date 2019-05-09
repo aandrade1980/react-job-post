@@ -1,3 +1,3 @@
-const jobCategories = ['Category', 'React', 'Node JS'];
+const jobCategories = ['Category', 'React', 'Node JS', 'Angular'];
 
 export default jobCategories;
