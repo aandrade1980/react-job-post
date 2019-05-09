@@ -5,6 +5,8 @@ import { UserConsumer } from '../context';
 import Alert from './Alert';
 import BackTo from './BackTo';
 
+import { GOOGLE_PROVIDER, GITHUB_PROVIDER } from '../utilities/constants';
+
 function Login({ history }) {
   const [formData, setFormData] = useState({
     email: '',
@@ -27,7 +29,24 @@ function Login({ history }) {
             }
             <form style={{ minWidth: '450px', margin: '4rem auto' }} className="form w-25" onSubmit={ evt => value.logIn(evt, formData.email, formData.password, history) }>
             <h3 className="mb-3 text-center">Login</h3>
-            <div className="form-group">
+            <div className="mb-4">
+              <button 
+                  onClick={ () => value.providerSignIn(GOOGLE_PROVIDER, history) }
+                  className="btn btn-outline-primary btn-block mr-2 mt-4"
+                >
+                  <i className="fab fa-google mr-2"></i>
+                  Login with Google
+                </button>
+                <button 
+                  onClick={ () => value.providerSignIn(GITHUB_PROVIDER, history) }
+                  className="btn btn-outline-dark btn-block mb-3"
+                >
+                  <i className="fab fa-github-alt mr-2"></i>
+                  Login with Github
+                </button>
+            </div>
+            <hr/>
+            <div className="form-group mt-4">
               <input
                 className="form-control"
                 type="email"
@@ -50,17 +69,10 @@ function Login({ history }) {
                 required
               />
             </div>
-            <button className="btn btn-success mr-2" type="submit" disabled={ value.isFetching }>
+            <button className="btn btn-success btn-block mr-2" type="submit" disabled={ value.isFetching }>
               { value.isFetching ? 'Fetching...' : 'Login' }
               <i className="fas fa-sign-in-alt ml-2"></i>
             </button>
-            <button 
-                onClick={ () => value.googleSignIn(history) }
-                className="btn btn-primary"
-              >
-                <i className="fab fa-google mr-1"></i>
-                Login with Google
-              </button>
           </form>
          </>
         );
