@@ -18,13 +18,7 @@ function UserProvider(props) {
   }, []);
 
   useEffect(() => {
-    const setFromEvent = evt => {
-      console.log('evt target => ', evt.target);
-      console.log('evt className => ', evt.target.className);
-      console.log('evt classList => ', evt.target.classList);
-
-      evt.target.classList.contains('modal-container') && setOpenModal({ ...openModal, show: false });
-    };
+    const setFromEvent = evt => evt.target.classList.contains('modal-container') && setOpenModal({ ...openModal, show: false });
 
     window.addEventListener('click', setFromEvent);  
       
