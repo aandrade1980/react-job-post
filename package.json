@@ -26,6 +26,7 @@
     "imagemin-pngquant": "^7.0.0",
     "mongoose": "^5.4.17",
     "morgan": "^1.9.1",
+    "styled-components": "^4.2.0",
     "typescript": "^3.4.5"
   },
   "devDependencies": {

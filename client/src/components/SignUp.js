@@ -3,10 +3,6 @@ import { withRouter } from 'react-router-dom';
 
 import { UserConsumer } from '../context';
 
-import BackTo from './BackTo';
-
-import Alert from './Alert';
-
 function SignUp({ history }) {
   const [formData, setFormData] = useState({
     email: '',
@@ -24,11 +20,7 @@ function SignUp({ history }) {
       { value => {
         return (
           <>
-            <BackTo toLink="login" toText="Login" />
-            { value.error && 
-              <Alert error={ value.error } setError={ value.setError }/>
-            }
-            <form style={{ minWidth: '450px', margin: '4rem auto' }} className="form w-25" onSubmit={ evt => value.createUser(evt, formData.email, formData.password, formData.name, history) }>
+            <form style={{ minWidth: '450px' }} className="form w-25" onSubmit={ evt => value.createUser(evt, formData.email, formData.password, formData.name, history) }>
             <h3 className="text-center mb-3">Sign Up</h3>
             <div className="form-group">
               <input
@@ -65,7 +57,7 @@ function SignUp({ history }) {
                 required
               />
             </div>
-            <button className="btn btn-success btn-block" type="submit" disabled={ value.isFetching }>  
+            <button className="btn btn-success btn-block openModal-btn" type="submit" disabled={ value.isFetching }>  
               { value.isFetching ? 'Fetching' : 'Submit'}
               <i className="fas fa-user-plus ml-2"></i>
             </button>
