@@ -38,7 +38,8 @@ function UserProvider(props) {
       .then(() => {
         setUser({ user: undefined });
         history.push("/");
-      });
+      })
+      .finally(() => setOpenModal({ ...openModal, show: false }))
   }
 
   const createUser = async (evt, email, password, name, history) => {

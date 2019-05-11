@@ -10,7 +10,7 @@ import { FORM_LOGIN, FORM_SING_UP } from '../utilities/constants';
 const Home = () => {
   return (
     <UserConsumer>
-      {value => {
+      { value => {
         const { error, setError, setOpenModal } = value; 
         return (
           <>

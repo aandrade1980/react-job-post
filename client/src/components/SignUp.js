@@ -57,7 +57,7 @@ function SignUp({ history }) {
                 required
               />
             </div>
-            <button className="btn btn-success btn-block openModal-btn" type="submit" disabled={ value.isFetching }>  
+            <button className="btn btn-success btn-block" type="submit" disabled={ value.isFetching }>  
               { value.isFetching ? 'Fetching' : 'Submit'}
               <i className="fas fa-user-plus ml-2"></i>
             </button>

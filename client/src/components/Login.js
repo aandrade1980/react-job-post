@@ -21,7 +21,11 @@ function Login({ history }) {
       { value => {
         return (
           <>
-            <form style={{ minWidth: '450px' }} className="form w-25" onSubmit={ evt => value.logIn(evt, formData.email, formData.password, history) }>
+            <form 
+              style={{ minWidth: '450px' }} 
+              className="form w-25" 
+              onSubmit={ evt => value.logIn(evt, formData.email, formData.password, history) }
+            >
             <h3 className="mb-3 text-center">Login</h3>
             <div className="mb-4 mt-4 d-flex justify-content-center">
               <button 
@@ -61,7 +65,7 @@ function Login({ history }) {
                 required
               />
             </div>
-            <button className="btn btn-success btn-block mr-2 openModal-btn" type="submit" disabled={ value.isFetching }>
+            <button className="btn btn-success btn-block mr-2" type="submit" disabled={ value.isFetching }>
               { value.isFetching ? 'Fetching...' : 'Login' }
               <i className="fas fa-sign-in-alt ml-2"></i>
             </button>
