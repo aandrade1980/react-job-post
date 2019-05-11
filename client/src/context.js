@@ -9,12 +9,28 @@ function UserProvider(props) {
   const [user, setUser] = useState({ user: undefined });
   const [isFetching, setIsFetching] = useState(false);
   const [error, setError] = useState(undefined);
+  const [openModal, setOpenModal] = useState({ show: false, form: undefined });
 
   useEffect(() => {
     auth.onAuthStateChanged(auth => {
       auth && setUser({ user: auth.providerData[0] });
     })
   }, []);
+
+  useEffect(() => {
+    const setFromEvent = evt => {
+      console.log('evt target => ', evt.target);
+      console.log('evt className => ', evt.target.className);
+      console.log('evt classList => ', evt.target.classList);
+
+      evt.target.classList.contains('modal-container') && setOpenModal({ ...openModal, show: false });
+    };
+
+    window.addEventListener('click', setFromEvent);  
+      
+    return () => window.removeEventListener('click', setFromEvent);
+
+  }, [openModal]);
 
   const logOut = (evt, history) => {
     evt.preventDefault();
@@ -23,6 +39,7 @@ function UserProvider(props) {
         setUser({ user: undefined });
         history.push("/");
       })
+      .finally(() => setOpenModal({ ...openModal, show: false }))
   }
 
   const createUser = async (evt, email, password, name, history) => {
@@ -74,7 +91,9 @@ function UserProvider(props) {
       error,
       setError,
       logIn,
-      providerSignIn
+      providerSignIn,
+      openModal,
+      setOpenModal
     }}>
       { props.children }
     </UserContext.Provider>
