@@ -4,7 +4,7 @@ import './NewJobPost.scss';
 
 import jobCategories from '../jobCategories';
 
-const timeOut = 2000;
+import { REDIRECT_TIMEOUT } from '../utilities/constants';
 
 export default function NewJobPost(props) {
 
@@ -56,7 +56,7 @@ export default function NewJobPost(props) {
           });
           setTimeout(() => {
             props.history.push('/');  
-          }, timeOut);
+          }, REDIRECT_TIMEOUT);
         } else {
           console.log('Error: ', res.error);
         };
@@ -84,7 +84,7 @@ export default function NewJobPost(props) {
               });
             setTimeout(() => {
               props.history.push('/')  
-            }, timeOut);
+            }, REDIRECT_TIMEOUT);
           } else {
             console.log('Error: ', res.error);
           }
