@@ -6,14 +6,14 @@ import { GOOGLE_PROVIDER } from './utilities/constants';
 const UserContext = React.createContext();
 
 function UserProvider(props) {
-  const [user, setUser] = useState({ user: undefined });
+  const [user, setUser] = useState(undefined);
   const [isFetching, setIsFetching] = useState(false);
   const [error, setError] = useState(undefined);
   const [openModal, setOpenModal] = useState({ show: false, form: undefined });
 
   useEffect(() => {
     auth.onAuthStateChanged(auth => {
-      auth && setUser({ user: auth.providerData[0] });
+      auth && setUser(auth.providerData[0]);
     })
   }, []);
 
@@ -30,7 +30,7 @@ function UserProvider(props) {
     evt.preventDefault();
     auth.signOut()
       .then(() => {
-        setUser({ user: undefined });
+        setUser(undefined);
         history.push("/");
       })
       .finally(() => setOpenModal({ ...openModal, show: false }))
@@ -47,12 +47,12 @@ function UserProvider(props) {
           displayName: name
         })
         .then(() => {
-          setUser({ user: {
+          setUser({
             displayName: currentUser.displayName,
             email: currentUser.email,
             providerId: currentUser.providerId,
             uid: currentUser.uid
-          }});
+          });
           history.push("/")
         });
       })
