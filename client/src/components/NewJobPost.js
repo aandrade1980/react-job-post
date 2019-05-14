@@ -21,17 +21,20 @@ export default function NewJobPost(props) {
   let uploadInput;
 
   useEffect(() => {
+    let isSubscribed = true;
     const { id } = props.match.params;
     id && fetch(`/api/getJob/${id}`)
       .then(response => response.json())
-      .then(jsonRes => setJob({
+      .then(jsonRes => isSubscribed && 
+        setJob({
         id: jsonRes.job._id,
         title: jsonRes.job.title,
         description: jsonRes.job.description || '',
         company: jsonRes.job.company || '',
         email: jsonRes.job.email || '',
         category: jsonRes.job.category
-      }))
+      }));
+    return () => isSubscribed = false;
   }, [props.match.params]);
 
   const submitJobPost = event => {
