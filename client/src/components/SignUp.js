@@ -19,13 +19,15 @@ function SignUp({ history }) {
     <UserConsumer>
       { value => {
         return (
-          <form className="form" onSubmit={ evt => value.createUser(evt, formData.email, formData.password, formData.name, history) }>
+          <>
+            <form style={{ minWidth: '450px' }} className="form w-25" onSubmit={ evt => value.createUser(evt, formData.email, formData.password, formData.name, history) }>
             <h3 className="text-center mb-3">Sign Up</h3>
             <div className="form-group">
               <input
                 className="form-control"
                 type="text"
                 placeholder="Name"
+                autoComplete="off"
                 name="name"
                 value={formData.name}
                 onChange={event => handleInputChange(event)}
@@ -37,6 +39,7 @@ function SignUp({ history }) {
                 className="form-control"
                 type="email"
                 placeholder="Email"
+                autoComplete="off"
                 name="email"
                 value={formData.email}
                 onChange={event => handleInputChange(event)}
@@ -59,6 +62,7 @@ function SignUp({ history }) {
               <i className="fas fa-user-plus ml-2"></i>
             </button>
           </form>
+          </>
         )
       }}
     </UserConsumer>

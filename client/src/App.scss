@@ -1,9 +1,4 @@
-.d-block { display: block }
-.d-flex { display: flex }
-
-.wth-50 { width: 50% }
 .wth-55 { width: 55% }
-.wth-100 { width: 100% }
 
 .max-wth-33 { max-width: 33% }
 .max-wth-650 { max-width: 650px }
@@ -16,10 +11,6 @@
 
 .m-top-25 { margin-top: 25px }
 .m-top-125 { margin-top: 125px }
-
-.txt-align-center { text-align: center }
-
-.justify-cont-center { justify-content: center }
 
 .alg-items-f-start { align-items: flex-start }
 
@@ -64,12 +55,6 @@ li { margin-right: 1rem }
 .jobList-container {
   display: flex;
   flex-wrap: wrap
-}
-
-.text-truncate {
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  overflow: hidden; 
 }
 
 /* 
@@ -122,36 +107,14 @@ li { margin-right: 1rem }
       button { width: 100% }
     }
   }
+  .form { min-width: 95% !important }
 }
 
 .form {
+  width: 50%;
   border: 1px solid #aaa;
   border-radius: 4px;
   padding: 1em
-}
-
-.form-input, .form-submit {
-  display: block;
-  min-width: 300px;
-  margin: 1em;
-  padding: 1em;
-  border-radius: 5px;
-  border-style: none;
-  border: 1px solid #ccc;
-}
-
-.form-submit {
-  background-color: #00a9a5;
-  color: white;
-  font-size: 1em;
-  border-radius: 25px;
-  cursor: pointer;
-  transition: 0.3s ease;
-  &:hover {
-    background-color: white;
-    color: #00a9a5;
-    padding: 1em;
-  }
 }
 
 .links {
@@ -160,4 +123,9 @@ li { margin-right: 1rem }
     text-decoration: none;
     color: white;
   }
+}
+
+.provider-login-button {
+  width: 40px;
+  border-radius: 50%
 }

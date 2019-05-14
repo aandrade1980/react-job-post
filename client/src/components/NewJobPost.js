@@ -4,7 +4,7 @@ import './NewJobPost.scss';
 
 import jobCategories from '../jobCategories';
 
-const timeOut = 2000;
+import { REDIRECT_TIMEOUT } from '../utilities/constants';
 
 export default function NewJobPost(props) {
 
@@ -56,7 +56,7 @@ export default function NewJobPost(props) {
           });
           setTimeout(() => {
             props.history.push('/');  
-          }, timeOut);
+          }, REDIRECT_TIMEOUT);
         } else {
           console.log('Error: ', res.error);
         };
@@ -84,7 +84,7 @@ export default function NewJobPost(props) {
               });
             setTimeout(() => {
               props.history.push('/')  
-            }, timeOut);
+            }, REDIRECT_TIMEOUT);
           } else {
             console.log('Error: ', res.error);
           }
@@ -101,13 +101,13 @@ export default function NewJobPost(props) {
     <div>
       <section>
         { job.postSuccess ?
-            <div className="alert alert-success txt-align-center wth-50" role="alert">
+            <div className="alert alert-success text-center w-50" role="alert">
               Job Successfully Posted!
               <i className="far fa-thumbs-up m-left-5"></i>
             </div> 
           : 
-          <form onSubmit={ submitJobPost }>
-            <h3 className="txt-align-center">Job Info</h3>
+          <form className="job-info-form" onSubmit={ submitJobPost }>
+            <h3 className="text-center">Job Info</h3>
             <fieldset className="border-radius-3">
               <div className="form-group">
                 <input 

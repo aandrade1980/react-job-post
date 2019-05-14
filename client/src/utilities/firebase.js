@@ -10,4 +10,12 @@ const fireBaseConfig = {
   messagingSenderId: process.env.REACT_APP_FIREBASE_MESSAGING_SENDER_ID
 };
 
-export default firebase.initializeApp(fireBaseConfig);
+firebase.initializeApp(fireBaseConfig);
+
+// Providers
+export const googleProvider = new firebase.auth.GoogleAuthProvider();
+export const githubProvider = new firebase.auth.GithubAuthProvider();
+
+export const auth = firebase.auth();
+
+export default firebase;

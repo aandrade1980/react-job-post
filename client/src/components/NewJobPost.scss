@@ -1,6 +1,9 @@
-form {
-  margin: 3rem auto;
-  width: 40%
+@import '../z-index';
+
+.job-info-form {
+  margin: 4rem auto;
+  width: 50%;
+  min-width: 500px;
 }
 
 fieldset {
@@ -25,6 +28,7 @@ textarea {
 .alert { 
   margin: 1rem auto;
   animation: fadeIn 1s ease-in both;
+  z-index: map-get($zindex, error);
 }
 
 @keyframes fadeIn {
@@ -44,7 +48,11 @@ textarea {
 */
 
 @media (min-width: 481px) and (max-width: 767px) {
-  form { width: 95% }  
+  .job-info-form {
+    margin: 2rem auto;
+    width: 95%;
+    min-width: auto;
+  }
 }
 
 /* 
@@ -53,5 +61,9 @@ textarea {
 */
 
 @media (min-width: 320px) and (max-width: 480px) {
-  form { width: 95% }  
+  .job-info-form {
+    margin: 2rem auto;
+    width: 95%;
+    min-width: auto;
+  } 
 }

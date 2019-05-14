@@ -1,56 +1,79 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect } from 'react';
 
-import fBase from './utilities/firebase';
+import { auth, googleProvider, githubProvider } from './utilities/firebase';
+import { GOOGLE_PROVIDER } from './utilities/constants';
 
 const UserContext = React.createContext();
 
 function UserProvider(props) {
-  const initialUser = { user: undefined };
-  const [user, setUser] = useState(initialUser);
+  const [user, setUser] = useState(undefined);
   const [isFetching, setIsFetching] = useState(false);
+  const [error, setError] = useState(undefined);
+  const [openModal, setOpenModal] = useState({ show: false, form: undefined });
 
   useEffect(() => {
-    fBase.auth().onAuthStateChanged(auth => {
-      auth && setUser({ user: auth.providerData[0] });
+    auth.onAuthStateChanged(auth => {
+      auth && setUser(auth.providerData[0]);
     })
   }, []);
 
-  const logOut =  evt => {
+  useEffect(() => {
+    const setFromEvent = evt => evt.target.classList.contains('modal-container') && setOpenModal({ ...openModal, show: false });
+
+    window.addEventListener('click', setFromEvent);  
+      
+    return () => window.removeEventListener('click', setFromEvent);
+
+  }, [openModal]);
+
+  const logOut = (evt, history) => {
     evt.preventDefault();
-    fBase
-      .auth()
-      .signOut()
-      .then(() => setUser({ user: undefined }));
+    auth.signOut()
+      .then(() => {
+        setUser(undefined);
+        history.push("/");
+      })
+      .finally(() => setOpenModal({ ...openModal, show: false }))
   }
 
   const createUser = async (evt, email, password, name, history) => {
     setIsFetching(true);
     evt.preventDefault();
-    await fBase
-      .auth()
-      .createUserWithEmailAndPassword(email, password)
+    await auth.createUserWithEmailAndPassword(email, password)
       .then(() => {
-        const currentUser = fBase.auth().currentUser;
+        const currentUser = auth.currentUser;
 
         currentUser && currentUser.updateProfile({
           displayName: name
         })
         .then(() => {
-          setUser({ user: {
+          setUser({
             displayName: currentUser.displayName,
             email: currentUser.email,
             providerId: currentUser.providerId,
             uid: currentUser.uid
-          }});
+          });
           history.push("/")
         });
       })
-      .catch(error => {
-        console.log("Error in Sing up user => ", error);
-        // TODO: add a red alert error banner
-        alert(error.message);
-      })
+      .catch(error => setError(error.message))
       .finally(() => setIsFetching(false));
+  }
+
+  const logIn = async (evt, email, password, history) => {
+    setIsFetching(true);
+    evt.preventDefault();
+    await auth.signInWithEmailAndPassword(email, password)
+      .then(() => history.push("/"))
+      .catch(error => setError(error.message))
+      .finally(() => setIsFetching(false));
+  }
+
+  const providerSignIn = async (provider, history) => {
+    auth.useDeviceLanguage();
+    await auth.signInWithPopup(provider === GOOGLE_PROVIDER ? googleProvider : githubProvider)
+      .then(() => history.push("/"))
+      .catch(error => setError(error.message));
   }
 
   return (
@@ -58,7 +81,13 @@ function UserProvider(props) {
       user,
       logOut,
       createUser,
-      isFetching
+      isFetching,
+      error,
+      setError,
+      logIn,
+      providerSignIn,
+      openModal,
+      setOpenModal
     }}>
       { props.children }
     </UserContext.Provider>
