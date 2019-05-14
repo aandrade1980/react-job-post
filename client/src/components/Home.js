@@ -2,9 +2,7 @@ import React from 'react';
 
 import Modal from './Modal';
 import Alert from './Alert';
-
 import { UserConsumer } from '../context';
-
 import { FORM_LOGIN, FORM_SING_UP } from '../utilities/constants';
 
 const Home = () => {
