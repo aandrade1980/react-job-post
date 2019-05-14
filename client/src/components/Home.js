@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { lazy, Suspense } from 'react';
 
-import Modal from './Modal';
-import Alert from './Alert';
 import { UserConsumer } from '../context';
 import { FORM_LOGIN, FORM_SING_UP } from '../utilities/constants';
+
+const Alert = lazy(() => import('./Alert'));
+const Modal = lazy(() => import('./Modal'));
 
 const Home = () => {
   return (
@@ -12,10 +13,14 @@ const Home = () => {
         const { error, setError, setOpenModal } = value; 
         return (
           <>
-            { error && 
-              <Alert error={ error } setError={ setError } /> 
+            { error &&
+              <Suspense fallback={ <div>Loading...</div> }>
+                <Alert error={ error } setError={ setError } /> 
+              </Suspense>
             }
-            <Modal />
+            <Suspense fallback={ <div>Loading...</div> }>
+              <Modal />
+            </Suspense>
             <div className="d-flex justify-content-center m-top-125">
               <button 
                 type="button" 
