@@ -1,10 +1,9 @@
 import * as React from 'react';
 import { UserConsumer } from '../context';
-import { withRouter } from 'react-router-dom';
 
 import './Header.scss';
 
-const Header = ({ title, history }) => {
+const Header = ({ title }) => {
   return (
     <UserConsumer>
       { value => {
@@ -15,7 +14,7 @@ const Header = ({ title, history }) => {
               { title }
             </h1>
             { user &&
-              <button className="btn btn-outline-light mr-2" onClick={ evt => logOut(evt, history) }>
+              <button className="btn btn-outline-light mr-2" onClick={ evt => logOut(evt) }>
                 { user.photoURL && <img className="mr-2" style={{ height: '40px', borderRadius: '50%' }} src={ user.photoURL } alt="User" /> }
                 <span>
                   { !user.photoURL && <i className="far fa-user mr-2"></i> }
@@ -30,4 +29,4 @@ const Header = ({ title, history }) => {
   )
 };
 
-export default React.memo(withRouter(Header));
+export default React.memo(Header);

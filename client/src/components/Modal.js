@@ -44,8 +44,7 @@ const ModalContainer = styled.div`
   #modal { 
     background: #fff;
     box-shadow: 0 2px 20px 0 rgba(0,0,0,.1);
-    border-radius: 5px;
-    animation: fadeIn 1s ease-in-out
+    border-radius: 5px
   };
   .fa-times-circle {
     float: right;
@@ -56,10 +55,6 @@ const ModalContainer = styled.div`
     font-size: 26px;
     color: #fff;
     &:hover { color: #ff6b6b }
-  };
-  @keyframes fadeIn {
-    from { transform: translate3d(0, -30%, 0) }
-    to { transform: translate3d(0, 0, 0) }
   }
 `;
 
