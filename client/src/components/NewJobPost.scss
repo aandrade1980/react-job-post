@@ -1,3 +1,11 @@
+@import '../common.scss';
+
+@mixin mobile {
+  margin: 2rem auto;
+  width: 95%;
+  min-width: auto
+}
+
 .job-info-form {
   margin: 4rem auto;
   width: 50%;
@@ -29,11 +37,7 @@ textarea {
 */
 
 @media (min-width: 481px) and (max-width: 767px) {
-  .job-info-form {
-    margin: 2rem auto;
-    width: 95%;
-    min-width: auto;
-  }
+  .job-info-form { @include mobile() } 
 }
 
 /* 
@@ -42,9 +46,10 @@ textarea {
 */
 
 @media (min-width: 320px) and (max-width: 480px) {
-  .job-info-form {
-    margin: 2rem auto;
-    width: 95%;
-    min-width: auto;
-  } 
+  .job-info-form { @include mobile() } 
+}
+
+.alert {
+  margin: 15px auto;
+  animation: fadeIn 1s ease-in both
 }
