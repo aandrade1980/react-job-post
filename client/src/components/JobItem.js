@@ -1,4 +1,3 @@
-/* eslint-disable no-restricted-globals */
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
@@ -42,4 +41,4 @@ JobItem.propTypes = {
   deleteJob: PropTypes.func
 };
 
-export default withRouter(JobItem);
+export default withRouter(React.memo(JobItem));

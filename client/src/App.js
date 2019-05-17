@@ -8,6 +8,7 @@ import './App.scss';
 // Components
 import Header from './components/Header';
 import JobPostList from './components/JobPostList';
+import Spinner from './components/Spinner';
 
 const JobPost = lazy(() => import('./components/JobPost'));
 const NewJobPost = lazy(() => import('./components/NewJobPost'));
@@ -48,7 +49,7 @@ const App = () => {
                 </ul>
               </nav>
             }
-            <Suspense fallback={ <div>Loading...</div> }>
+            <Suspense fallback={ <Spinner /> }>
               <Switch>
                 <Route 
                   exact 

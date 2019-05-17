@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
 
-const JobPost = props => {
+const JobPost = ({ match, history }) => {
 
   const [job, setJob] = useState({});
 
   useEffect(() => {
     let isSubscribed = true;
-    const { jobId } = props.match.params;
+    const { jobId } = match.params;
     
     jobId && fetch(`/api/getJob/${jobId}`)
       .then(response => response.json())
@@ -24,11 +24,11 @@ const JobPost = props => {
         })}
       )
     return () => isSubscribed = false;
-  }, [props.match.params]);
+  }, [match.params]);
 
   const openEditForm = () => {
     const path = `/updateJob/${job.jobId}`;
-      props.history.push(path);
+      history.push(path);
   }
 
   return (
@@ -53,4 +53,4 @@ const JobPost = props => {
   )
 }
 
-export default JobPost;
+export default React.memo(JobPost);
