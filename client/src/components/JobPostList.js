@@ -1,5 +1,7 @@
 import React, { lazy, Suspense, useEffect, useState } from 'react';
 
+import Spinner from './Spinner';
+
 const JobItem = lazy(() => import('./JobItem'));
 
 const JobPostList = () => {
@@ -25,7 +27,7 @@ const JobPostList = () => {
 
   return (
     <div className="jobList-container">
-      <Suspense fallback={ <div>Loading...</div> } >
+      <Suspense fallback={ <Spinner /> } >
         { jobs.length > 0 && jobs.map(job => {
           return (
             <JobItem

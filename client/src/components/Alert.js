@@ -23,4 +23,4 @@ function Alert({ error, setError }) {
   )
 }
 
-export default Alert;
+export default React.memo(Alert);
