@@ -1,4 +1,10 @@
-@import '../z-index';
+@import '../common.scss';
+
+@mixin mobile {
+  margin: 2rem auto;
+  width: 95%;
+  min-width: auto
+}
 
 .job-info-form {
   margin: 4rem auto;
@@ -25,34 +31,13 @@ textarea {
   min-height: 50px
 }
 
-.alert { 
-  margin: 1rem auto;
-  animation: fadeIn 1s ease-in both;
-  z-index: map-get($zindex, error);
-}
-
-@keyframes fadeIn {
-	from {
-		opacity: 0;
-		transform: translate3d(0, -30%, 0);
-	}
-	to {
-		opacity: 1;
-		transform: translate3d(0, 0, 0);
-	}
-}
-
 /* 
   ##Device = Low Resolution Tablets, Mobiles (Landscape)
   ##Screen = B/w 481px to 767px
 */
 
 @media (min-width: 481px) and (max-width: 767px) {
-  .job-info-form {
-    margin: 2rem auto;
-    width: 95%;
-    min-width: auto;
-  }
+  .job-info-form { @include mobile() } 
 }
 
 /* 
@@ -61,9 +46,10 @@ textarea {
 */
 
 @media (min-width: 320px) and (max-width: 480px) {
-  .job-info-form {
-    margin: 2rem auto;
-    width: 95%;
-    min-width: auto;
-  } 
+  .job-info-form { @include mobile() } 
+}
+
+.alert {
+  margin: 15px auto;
+  animation: fadeIn 1s ease-in both
 }

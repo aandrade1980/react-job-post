@@ -4,9 +4,11 @@ import './NewJobPost.scss';
 
 import jobCategories from '../jobCategories';
 
+import Spinner from './Spinner';
+
 import { REDIRECT_TIMEOUT } from '../utilities/constants';
 
-export default function NewJobPost(props) {
+function NewJobPost({ match, history }) {
 
   const [job, setJob] = useState({
     title: '',
@@ -21,18 +23,21 @@ export default function NewJobPost(props) {
   let uploadInput;
 
   useEffect(() => {
-    const { id } = props.match.params;
+    let isSubscribed = true;
+    const { id } = match.params;
     id && fetch(`/api/getJob/${id}`)
       .then(response => response.json())
-      .then(jsonRes => setJob({
+      .then(jsonRes => isSubscribed && 
+        setJob({
         id: jsonRes.job._id,
         title: jsonRes.job.title,
         description: jsonRes.job.description || '',
         company: jsonRes.job.company || '',
         email: jsonRes.job.email || '',
         category: jsonRes.job.category
-      }))
-  }, [props.match.params]);
+      }));
+    return () => isSubscribed = false;
+  }, [match.params]);
 
   const submitJobPost = event => {
     setJob({ ...job, isFetching: true });
@@ -55,7 +60,7 @@ export default function NewJobPost(props) {
             isFetching: false 
           });
           setTimeout(() => {
-            props.history.push('/');  
+            history.push('/');  
           }, REDIRECT_TIMEOUT);
         } else {
           console.log('Error: ', res.error);
@@ -83,7 +88,7 @@ export default function NewJobPost(props) {
               isFetching: false
               });
             setTimeout(() => {
-              props.history.push('/')  
+              history.push('/')  
             }, REDIRECT_TIMEOUT);
           } else {
             console.log('Error: ', res.error);
@@ -99,6 +104,7 @@ export default function NewJobPost(props) {
 
   return (
     <div>
+      { job.isFetching && <Spinner /> }
       <section>
         { job.postSuccess ?
             <div className="alert alert-success text-center w-50" role="alert">
@@ -164,7 +170,7 @@ export default function NewJobPost(props) {
                   onChange={ changeHandler }
                 />
               </div>
-              { !props.match.params.id && 
+              { !match.params.id && 
                 <div className="form-group">
                   <input 
                     ref={ (ref) => { uploadInput = ref }} 
@@ -189,4 +195,6 @@ export default function NewJobPost(props) {
       </section>
     </div>
   )
-}
+};
+
+export default React.memo(NewJobPost);

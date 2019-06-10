@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Redirect } from 'react-router-dom';
 
 import { auth, googleProvider, githubProvider } from './utilities/firebase';
 import { GOOGLE_PROVIDER } from './utilities/constants';
@@ -11,9 +12,14 @@ function UserProvider(props) {
   const [error, setError] = useState(undefined);
   const [openModal, setOpenModal] = useState({ show: false, form: undefined });
 
+  const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+
   useEffect(() => {
     auth.onAuthStateChanged(auth => {
-      auth && setUser(auth.providerData[0]);
+      if (auth) {
+        setUser(auth.providerData[0]);
+        return <Redirect to='/' />
+      }
     })
   }, []);
 
@@ -26,17 +32,14 @@ function UserProvider(props) {
 
   }, [openModal]);
 
-  const logOut = (evt, history) => {
+  const logOut = evt => {
     evt.preventDefault();
     auth.signOut()
-      .then(() => {
-        setUser(undefined);
-        history.push("/");
-      })
+      .then(() => setUser(undefined))
       .finally(() => setOpenModal({ ...openModal, show: false }))
   }
 
-  const createUser = async (evt, email, password, name, history) => {
+  const createUser = async (evt, email, password, name) => {
     setIsFetching(true);
     evt.preventDefault();
     await auth.createUserWithEmailAndPassword(email, password)
@@ -46,34 +49,37 @@ function UserProvider(props) {
         currentUser && currentUser.updateProfile({
           displayName: name
         })
-        .then(() => {
-          setUser({
+        .then(() => setUser({
             displayName: currentUser.displayName,
             email: currentUser.email,
             providerId: currentUser.providerId,
             uid: currentUser.uid
-          });
-          history.push("/")
-        });
+          }));
       })
       .catch(error => setError(error.message))
       .finally(() => setIsFetching(false));
   }
 
-  const logIn = async (evt, email, password, history) => {
-    setIsFetching(true);
+  const logIn = async (evt, email, password) => {
     evt.preventDefault();
+    setIsFetching(true);
     await auth.signInWithEmailAndPassword(email, password)
-      .then(() => history.push("/"))
       .catch(error => setError(error.message))
       .finally(() => setIsFetching(false));
   }
 
-  const providerSignIn = async (provider, history) => {
+  const providerSignIn = async (evt, provider) => {
+    evt.preventDefault();
     auth.useDeviceLanguage();
-    await auth.signInWithPopup(provider === GOOGLE_PROVIDER ? googleProvider : githubProvider)
-      .then(() => history.push("/"))
-      .catch(error => setError(error.message));
+    const providerMethod = provider === GOOGLE_PROVIDER ? googleProvider : githubProvider;
+    try {
+      await (isMobile ?
+        auth.signInWithRedirect(providerMethod) :
+        auth.signInWithPopup(providerMethod));
+    } catch(err) { 
+      setError(err.message) 
+    }
+    
   }
 
   return (

@@ -1,16 +1,18 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import PropTypes from "prop-types";
-import React from 'react';
+import React, { lazy, Suspense } from 'react';
 import { NavLink, Route, Switch } from 'react-router-dom';
 import { UserConsumer } from './context';
 import './App.scss';
 
 // Components
 import Header from './components/Header';
-import JobPost from './components/JobPost';
 import JobPostList from './components/JobPostList';
-import NewJobPost from './components/NewJobPost';
-import Home from './components/Home';
+import Spinner from './components/Spinner';
+
+const JobPost = lazy(() => import('./components/JobPost'));
+const NewJobPost = lazy(() => import('./components/NewJobPost'));
+const Home = lazy(() => import('./components/Home'));
 
 const App = () => {
   return (
@@ -47,22 +49,24 @@ const App = () => {
                 </ul>
               </nav>
             }
-            <Switch>
-              <Route 
-                exact 
-                path={["/new-post", "/updateJob/:id"]}
-                component={ NewJobPost }
-              />
-              <Route 
-                exact 
-                path={"/jobPost/:jobId"}
-                component={ JobPost }
-              />
-              <Route 
-                path="/"
-                component={ user ? JobPostList : Home }
-              />
-            </Switch>
+            <Suspense fallback={ <Spinner /> }>
+              <Switch>
+                <Route 
+                  exact 
+                  path={["/new-post", "/updateJob/:id"]}
+                  component={ NewJobPost }
+                />
+                <Route 
+                  exact 
+                  path={"/jobPost/:jobId"}
+                  component={ JobPost }
+                />
+                <Route 
+                  path="/"
+                  component={ user ? JobPostList : Home }
+                />
+              </Switch>
+            </Suspense>
             </main>
           </>
         )
