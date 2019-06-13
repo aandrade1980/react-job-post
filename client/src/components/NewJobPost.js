@@ -98,8 +98,6 @@ function NewJobPost({ match, history }) {
   }
 
   const changeHandler = event => {
-    console.log('change Handler!!!');
-    
     const { name, value } = event.target;
     setJob({ ...job, [name]: value });
   }
