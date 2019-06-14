@@ -1,11 +1,6 @@
 import React, { useEffect, useState } from 'react';
-
 import './NewJobPost.scss';
-
-import jobCategories from '../jobCategories';
-
 import Spinner from './Spinner';
-
 import { REDIRECT_TIMEOUT } from '../utilities/constants';
 
 function NewJobPost({ match, history }) {
@@ -19,6 +14,14 @@ function NewJobPost({ match, history }) {
     isFetching: false,
     postSuccess: false
   });
+
+  const [categories, setCategories] = useState([]);
+
+  useEffect(() => {
+    fetch('/api/getCategories')
+    .then(res => res.json())
+    .then(jres => setCategories(jres.data));
+  }, []);
 
   let uploadInput;
 
@@ -129,10 +132,9 @@ function NewJobPost({ match, history }) {
               </div>
               <div className="form-group">
                 <select name="category" className="form-control" value={ job.category } onChange={ changeHandler }>
-                  { jobCategories.map((category, index) => {
-                    return <option key={index} value={category}>{category}</option>
-                  }) }
-                </select>
+                  <option>Select a Category</option>
+                  { categories.map(category => <option key={ category._id } value={ category.label }>{ category.label }</option>) }
+                </select> 
               </div>
               <div className="input-group mb-3">
                 <div className="input-group-prepend">
