@@ -1,3 +1,5 @@
+/* eslint-disable no-console */
+/* eslint-disable no-undef */
 const mongoose = require('mongoose');
 const express = require('express');
 const bodyParser = require('body-parser');
@@ -9,6 +11,7 @@ const imagemin = require('imagemin');
 const imageminPngquant = require('imagemin-pngquant');
 
 const Data = require('./data');
+const Category = require('./categories');
 
 const API_PORT = process.env.PORT || 4000;
 const app = express();
@@ -33,6 +36,7 @@ app.use(logger('dev'));
 app.use(fileUpload());
 app.use(express.static('public'));
 
+// Jobs
 router.get('/getJobs', (req, res) => {
   Data.find((err, data) => {
     if(err) return res.json({ success: false, error: err });
@@ -125,6 +129,30 @@ router.delete('/deleteJob/:id', (req, res) => {
       id: job._id
     };
     return res.status(200).send(response);
+  })
+});
+
+// Categories
+router.post('/putCategory', (req, res) => {
+  const category = new Category();
+
+  const { label } = req.body;
+  
+  category.label = label;
+
+  category.save(error => {
+    if (error) {
+      return res.json({ success: false, error });
+    }
+    return res.json({ success: true });
+  });
+
+});
+
+router.get('/getCategories', (req, res) => {
+  Category.find((error, data) => {
+    if(error) return res.json({ success: false, error });
+    return res.json({ success: true, data });
   })
 });
 
