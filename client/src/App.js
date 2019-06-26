@@ -9,6 +9,7 @@ import './App.scss';
 import Header from './components/Header';
 import JobPostList from './components/JobPostList';
 import Spinner from './components/Spinner';
+import Categories from './components/Categories';
 
 const JobPost = lazy(() => import('./components/JobPost'));
 const NewJobPost = lazy(() => import('./components/NewJobPost'));
@@ -46,6 +47,15 @@ const App = () => {
                       <i className="fas fa-file-alt m-left-5"></i>
                     </NavLink>
                   </li>
+                  <li>
+                    <NavLink 
+                      to="/category" 
+                      activeClassName="selected"
+                    >
+                      Categories
+                      <i className="fa fa-list-alt m-left-5"></i>
+                    </NavLink>
+                  </li>
                 </ul>
               </nav>
             }
@@ -60,6 +70,11 @@ const App = () => {
                   exact 
                   path={"/jobPost/:jobId"}
                   component={ JobPost }
+                />
+                <Route 
+                  exact 
+                  path={"/category"}
+                  component={ Categories }
                 />
                 <Route 
                   path="/"
