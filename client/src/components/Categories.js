@@ -11,8 +11,6 @@ function Categories() {
 
   const changeHandler = event => {
 
-    console.log("onChange={ changeHandler }");
-
     const { value } = event.target;
     setCategory({ label: value });
   }
