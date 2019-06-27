@@ -9,6 +9,7 @@ const imagemin = require('imagemin');
 const imageminPngquant = require('imagemin-pngquant');
 
 const Data = require('./data');
+const Category = require('./categories');
 
 const API_PORT = process.env.PORT || 4000;
 const app = express();
@@ -125,6 +126,30 @@ router.delete('/deleteJob/:id', (req, res) => {
       id: job._id
     };
     return res.status(200).send(response);
+  })
+});
+
+// Categories
+router.post('/putCategory', (req, res) => {
+  const category = new Category();
+
+  const { label } = req.body;
+
+  category.label = label;
+
+  category.save(error => {
+    if (error) {
+      return res.json({ success: false, error });
+    }
+    return res.json({ success: true });
+  });
+
+});
+
+router.get('/getCategories', (req, res) => {
+  Category.find((error, data) => {
+    if(error) return res.json({ success: false, error });
+    return res.json({ success: true, data });
   })
 });
 

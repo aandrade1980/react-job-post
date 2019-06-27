@@ -30,6 +30,7 @@
     "typescript": "^3.4.5"
   },
   "devDependencies": {
+    "husky": "^2.4.1",
     "nodemon": "^1.18.10"
   },
   "engines": {

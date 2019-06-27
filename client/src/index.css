@@ -6,7 +6,7 @@
 body {
   margin: 0;
   padding: 0;
-  font-family: "Oswald", sans-serif !important;
+  font-family: "Roboto Condensed", sans-serif !important;
   background: var(--mainWhite) !important;
   color: var(--mainDark) !important;
   -webkit-font-smoothing: antialiased;
