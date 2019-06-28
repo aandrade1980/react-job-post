@@ -136,9 +136,7 @@ router.delete('/deleteJob/:id', (req, res) => {
 router.post('/putCategory', (req, res) => {
   const category = new Category();
 
-  const { label } = req.body;
-  
-  category.label = label;
+  category.label = req.body.label;
 
   category.save(error => {
     if (error) {
@@ -154,6 +152,17 @@ router.get('/getCategories', (req, res) => {
     if(error) return res.json({ success: false, error });
     return res.json({ success: true, data });
   })
+});
+
+router.post('/deleteCat', (req, res) => {
+  Category.findOneAndDelete({ _id: req.body.catId }, (err, cat) => {
+    if (err) return res.status(500).json(err);
+    const response = {
+      message: "Category successfully deleted",
+      id: cat._id
+    };
+    return res.status(200).json(response);
+  });
 });
 
 app.use("/api", router);
