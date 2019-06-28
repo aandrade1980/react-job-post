@@ -1,5 +1,5 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
-import PropTypes from "prop-types";
+import PropTypes from 'prop-types';
 import React, { lazy, Suspense } from 'react';
 import { NavLink, Route, Switch } from 'react-router-dom';
 import { UserConsumer } from './context';

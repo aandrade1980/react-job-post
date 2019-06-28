@@ -36,7 +36,7 @@ function UserProvider(props) {
     evt.preventDefault();
     auth.signOut()
       .then(() => setUser(undefined))
-      .finally(() => setOpenModal({ ...openModal, show: false }))
+      .finally(() => setOpenModal({ ...openModal, show: false }));
   }
 
   const createUser = async (evt, email, password, name) => {
@@ -50,10 +50,7 @@ function UserProvider(props) {
           displayName: name
         })
         .then(() => setUser({
-            displayName: currentUser.displayName,
-            email: currentUser.email,
-            providerId: currentUser.providerId,
-            uid: currentUser.uid
+          ...currentUser
           }));
       })
       .catch(error => setError(error.message))
@@ -79,7 +76,6 @@ function UserProvider(props) {
     } catch(err) { 
       setError(err.message) 
     }
-    
   }
 
   return (
