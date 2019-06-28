@@ -32,8 +32,10 @@ function Categories() {
     fetch('/api/putCategory', {
       method: 'POST',
       body: data
-    }).then(res => res.json())
-      .then(res => res.success ? getCategories() : console.error(res.error));
+    })
+    .then(res => res.json())
+    .then(res => res.success ? getCategories() : console.error(res.error))
+    .catch(error => console.error(error));
   }
 
   const getCategories = () => {
