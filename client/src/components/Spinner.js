@@ -1,13 +1,13 @@
-import React from 'react';
-import styled from 'styled-components';
+import React from "react";
+import styled from "styled-components";
 
 function Spinner() {
   return (
     <SpinnerContainer>
-      <img src='img/Facebook-1s-200px.svg' alt='Loading' />
+      <img src="img/Facebook-1s-200px.svg" alt="Loading" />
     </SpinnerContainer>
-  )
-};
+  );
+}
 
 const SpinnerContainer = styled.div`
   position: fixed;
@@ -15,7 +15,7 @@ const SpinnerContainer = styled.div`
   left: 0;
   right: 0;
   bottom: 0;
-  background: rgba(0, 0, 0, .3);
+  background: rgba(0, 0, 0, 0.3);
   display: flex;
   align-items: center;
   justify-content: center;

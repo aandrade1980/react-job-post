@@ -1,34 +1,38 @@
-import React from 'react';
-import styled from 'styled-components';
+import React from "react";
+import styled from "styled-components";
 
-import Login from './Login';
-import SignUp from './SignUp';
+import Login from "./Login";
+import SignUp from "./SignUp";
 
-import { UserConsumer } from '../context';
+import { UserConsumer } from "../context";
 
-import { FORM_LOGIN } from '../utilities/constants';
+import { FORM_LOGIN } from "../utilities/constants";
 
 const Modal = () => {
   return (
     <UserConsumer>
-      { value => {
-          const { openModal, setOpenModal } = value;
-          return (
-            openModal.show && 
+      {value => {
+        const { openModal, setOpenModal } = value;
+        return (
+          openModal.show && (
             <ModalContainer className="modal-container">
               <div id="modal">
-                <i className="fas fa-times-circle" onClick={ () => setOpenModal({ ...openModal, show: false }) }></i>
-                { openModal.form === FORM_LOGIN ? 
-                  <Login /> :
-                  <SignUp />
-                }
+                <i
+                  className="fas fa-times-circle"
+                  onClick={() => setOpenModal({ ...openModal, show: false })}
+                  onKeyDown={setOpenModal}
+                  role="button"
+                  tabIndex="0"
+                />
+                {openModal.form === FORM_LOGIN ? <Login /> : <SignUp />}
               </div>
             </ModalContainer>
-          );
+          )
+        );
       }}
     </UserConsumer>
-  )
-}
+  );
+};
 
 const ModalContainer = styled.div`
   position: fixed;
@@ -36,16 +40,16 @@ const ModalContainer = styled.div`
   left: 0;
   right: 0;
   bottom: 0;
-  background: rgba(0, 0, 0, .3);
+  background: rgba(0, 0, 0, 0.3);
   display: flex;
   align-items: center;
   justify-content: center;
   z-index: 8000;
-  #modal { 
+  #modal {
     background: #fff;
-    box-shadow: 0 2px 20px 0 rgba(0,0,0,.1);
-    border-radius: 5px
-  };
+    box-shadow: 0 2px 20px 0 rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+  }
   .fa-times-circle {
     float: right;
     position: relative;
@@ -54,7 +58,9 @@ const ModalContainer = styled.div`
     cursor: pointer;
     font-size: 26px;
     color: #fff;
-    &:hover { color: #ff6b6b }
+    &:hover {
+      color: #ff6b6b;
+    }
   }
 `;
 

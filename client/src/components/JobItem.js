@@ -1,44 +1,56 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { withRouter } from 'react-router-dom';
+import React from "react";
+import PropTypes from "prop-types";
+import { withRouter } from "react-router-dom";
 
-import './JobItem.scss';
+import "./JobItem.scss";
 
 function JobItem({ jobId, title, imgUrl, deleteJob, history }) {
-
   const routeChange = e => {
-    if (e.target.tagName !== 'BUTTON') {
+    if (e.target.tagName !== "BUTTON") {
       const path = `/jobPost/${jobId}`;
       history.push(path);
     }
-  }
+  };
 
   return (
-    <div className="jobCard" onClick={ routeChange }>
-      <button type="button" className="btn btn-outline-danger btn-sm" style={ styles.button } onClick={ () => deleteJob(jobId) }>
-        Delete<i className="far fa-trash-alt m-left-5"></i>
+    <div
+      className="jobCard"
+      onClick={routeChange}
+      onKeyDown={routeChange}
+      role="button"
+      tabIndex="0"
+    >
+      <button
+        type="button"
+        className="btn btn-outline-danger btn-sm"
+        style={styles.button}
+        onClick={() => deleteJob(jobId)}
+      >
+        Delete
+        <i className="far fa-trash-alt m-left-5" />
       </button>
-      <h5>{ title }</h5>
-      { imgUrl && <img style={ styles.img } alt="Job" src={ imgUrl } /> }
-    </div>  
-  )
+      <h5>{title}</h5>
+      {imgUrl && <img style={styles.img} alt="Job" src={imgUrl} />}
+    </div>
+  );
 }
 
 const styles = {
-  img: { 
-    maxWidth: '100%',
-    marginTop: '10px'
+  img: {
+    maxWidth: "100%",
+    marginTop: "10px"
   },
   button: {
-    float: 'right'
+    float: "right"
   }
-}
+};
 
 JobItem.propTypes = {
   jobId: PropTypes.string,
   title: PropTypes.string,
   imgUrl: PropTypes.string,
-  deleteJob: PropTypes.func
+  deleteJob: PropTypes.func,
+  history: PropTypes.object
 };
 
 export default withRouter(React.memo(JobItem));
