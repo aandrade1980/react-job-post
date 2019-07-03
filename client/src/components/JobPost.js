@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
+import dayjs from "dayjs";
+import relativeTime from "dayjs/plugin/relativeTime";
 
 const JobPost = ({ match, history }) => {
   const [job, setJob] = useState({});
@@ -32,6 +34,8 @@ const JobPost = ({ match, history }) => {
     history.push(path);
   };
 
+  dayjs.extend(relativeTime);
+
   return (
     <div className="jobContainer d-flex m-top-25 justify-content-center alg-items-center">
       {job.imgUrl && (
@@ -47,7 +51,7 @@ const JobPost = ({ match, history }) => {
         <h6>{job.email}</h6>
         <h6>{job.company}</h6>
         <p className="white-space-pw">{job.description}</p>
-        <h6>{job.createdAt && job.createdAt.toDateString()}</h6>
+        <h6>{job.createdAt && dayjs(job.createdAt).fromNow()}</h6>
       </div>
       <div className="jobEditButtonContainer">
         {job.title && (
