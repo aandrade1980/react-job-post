@@ -1,9 +1,18 @@
 {
-  "globals": { "fetch": false, "FormData": false },
+  "globals": {
+    "fetch": false,
+    "FormData": false
+  },
   "parser": "babel-eslint",
   "extends": ["eslint:recommended", "plugin:react/recommended"],
   "env": {
     "browser": true,
-    "node": true
+    "node": true,
+    "es6": true
+  },
+  "settings": {
+    "react": {
+      "version": "detect"
+    }
   }
 }
