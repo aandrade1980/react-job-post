@@ -17,13 +17,8 @@ const JobPost = ({ match, history }) => {
           isSubscribed &&
             setJob({
               jobId,
-              title: jsonResponse.job.title,
-              description: jsonResponse.job.description,
-              imgUrl: jsonResponse.job.imgUrl,
-              createdAt: new Date(jsonResponse.job.createdAt),
-              email: jsonResponse.job.email,
-              company: jsonResponse.job.company,
-              category: jsonResponse.job.category
+              ...jsonResponse.job,
+              createdAt: new Date(jsonResponse.job.createdAt)
             });
         });
     return () => (isSubscribed = false);
