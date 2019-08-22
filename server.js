@@ -37,7 +37,10 @@ app.use(express.static("public"));
 router.get("/getJobs", (req, res) => {
   Data.find((err, data) => {
     if (err) return res.json({ success: false, error: err });
-    return res.json({ success: true, data });
+    const sortedJobs = data.sort(
+      (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+    );
+    return res.json({ success: true, data: sortedJobs });
   });
 });
 
