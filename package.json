@@ -25,7 +25,7 @@
     "firebase": "^5.11.1",
     "imagemin": "^6.1.0",
     "imagemin-pngquant": "^7.0.0",
-    "mongoose": "^5.4.17",
+    "mongoose": "^5.7.5",
     "morgan": "^1.9.1",
     "typescript": "^3.4.5"
   },
