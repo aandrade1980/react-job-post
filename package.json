@@ -22,10 +22,10 @@
     "concurrently": "^4.1.0",
     "express": "^4.16.4",
     "express-fileupload": "^1.1.1-alpha.3",
-    "firebase": "^5.11.1",
+    "firebase": "^7.11.0",
     "imagemin": "^6.1.0",
     "imagemin-pngquant": "^7.0.0",
-    "mongoose": "^5.4.17",
+    "mongoose": "^5.7.5",
     "morgan": "^1.9.1",
     "typescript": "^3.4.5"
   },
@@ -33,7 +33,7 @@
     "nodemon": "^1.18.10"
   },
   "engines": {
-    "node": "10.x",
+    "node": "12.x",
     "npm": "6.X",
     "yarn": "1.X"
   }
